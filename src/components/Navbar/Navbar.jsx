@@ -1,37 +1,30 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import logo from '../../assets/images/icons/logo.svg'
 import './Navbar.css'
-
-gsap.registerPlugin(ScrollTrigger)
 
 function Navbar() {
 
   const navbarRef = useRef(null)
+  const location = useLocation()
 
-  // useState para controlar classe clara
   const estadoDoMenu = useState(false)
   const menuAberto = estadoDoMenu[0]
   const setMenuAberto = estadoDoMenu[1]
 
   useEffect(function() {
-
     const navbar = navbarRef.current
 
-    // Detecta seções claras e escuras
-    ScrollTrigger.create({
-      trigger: '.contact', // página de contato — fundo claro
-      start: 'top 80px',
-      end: 'bottom 80px',
-      onEnter: function() { navbar.classList.add('clara') },
-      onLeave: function() { navbar.classList.remove('clara') },
-      onEnterBack: function() { navbar.classList.add('clara') },
-      onLeaveBack: function() { navbar.classList.remove('clara') },
-    })
+    // Páginas com fundo claro — navbar escura
+    const paginasClaras = ['/contact', '/about', '/blog', '/projects']
 
-  }, [])
+    if (paginasClaras.includes(location.pathname)) {
+      navbar.classList.add('clara')
+    } else {
+      navbar.classList.remove('clara')
+    }
+
+  }, [location]) // roda toda vez que a rota muda
 
   function alternarMenu() {
     if (menuAberto === true) {

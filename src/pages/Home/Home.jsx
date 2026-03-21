@@ -1,15 +1,13 @@
 import Hero from './Hero/Hero'
-import './Home.css'
-
-
-
-
-
+import BlogPreview from './BlogPreview/BlogPreview'
+import Testimonials from './Testimonials/Testimonials'
 
 function Home() {
   return (
     <main>
       <Hero />
+      <Testimonials />
+      <BlogPreview />
     </main>
   )
 }

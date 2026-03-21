@@ -43,7 +43,7 @@
 
 .navbar-menu ul li a {
   text-decoration: none;
-  color: var(--color-bg);
+  color: #ffffff;
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 500;
@@ -63,7 +63,7 @@
 .navbar-cta {
   display: none;
   text-decoration: none;
-  color: var(--color-bg);
+  color: #ffffff;
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 500;
@@ -76,9 +76,9 @@
 }
 
 .navbar-cta:hover {
-  background: var(--color-bg);
+  background: #ffffff;
   color: var(--color-text);
-  border-color: var(--color-bg);
+  border-color: #ffffff;
 }
 
 /* ===========================
@@ -101,7 +101,7 @@
   display: block;
   width: 24px;
   height: 2px;
-  background: var(--color-bg);
+  background: #ffffff;
   transition: var(--transition);
   transform-origin: center;
 }
