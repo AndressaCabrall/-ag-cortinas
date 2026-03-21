@@ -1,57 +1,69 @@
+import { useEffect, useState } from 'react'
 import './Testimonials.css'
 
-const depoimentos = [
-  {
-    id: 1,
-    nome: "José Augusto",
-    texto: "Excelente padrão de qualidade, equipe altamente qualificada!",
-    estrelas: 5,
-    data: "Dez 2024"
-  },
-  {
-    id: 2,
-    nome: "Jéssica Rocha",
-    texto: "Melhor lugar para colocar persiana! Atendimento maravilhoso e a persiana ficou exatamente do jeito que pedi.",
-    estrelas: 5,
-    data: "Jan 2024"
-  },
-  {
-    id: 3,
-    nome: "Elizandra E Albino",
-    texto: "Um sonho realizado, ficou linda a persiana, do jeitinho que eu queria. Super indico. Atendimento show tanto da vendedora quanto do instalador.",
-    estrelas: 5,
-    data: "Jan 2024"
-  },
-  {
-    id: 4,
-    nome: "Karine Priester",
-    texto: "A Andressa é super querida, tira todas as dúvidas e é sempre muito objetiva com o atendimento, o que facilita muito.",
-    estrelas: 5,
-    data: "Dez 2023"
-  },
-  {
-    id: 5,
-    nome: "Dandara Argenta",
-    texto: "Trabalho excelente, Andressa sempre solicita e gentil, entregou antes do prazo, ficou linda a cortina!",
-    estrelas: 5,
-    data: "Nov 2023"
-  },
-  {
-    id: 6,
-    nome: "Guilherme Rovaris Daufenbach",
-    texto: "Andressa foi muito atenciosa para conciliar os horários, o produto é de ótima qualidade e o resultado ficou excelente.",
-    estrelas: 5,
-    data: "Out 2023"
-  },
-]
-
 function Testimonials() {
+
+  const estadoAvaliacoes = useState([])
+  const avaliacoes = estadoAvaliacoes[0]
+  const setAvaliacoes = estadoAvaliacoes[1]
+
+  const estadoCarregando = useState(true)
+  const carregando = estadoCarregando[0]
+  const setCarregando = estadoCarregando[1]
+
+  const estadoErro = useState(null)
+  const erro = estadoErro[0]
+  const setErro = estadoErro[1]
+
+  useEffect(function() {
+
+    // Chama o arquivo PHP
+    fetch('/api/avaliacoes.php')
+      .then(function(response) {
+        return response.json()
+      })
+      .then(function(data) {
+        if (data.status === 'OK') {
+          setAvaliacoes(data.result.reviews)
+          setCarregando(false)
+        } else {
+          setErro('Não foi possível carregar as avaliações')
+          setCarregando(false)
+        }
+      })
+      .catch(function(err) {
+        setErro('Erro ao conectar')
+        setCarregando(false)
+      })
+
+  }, [])
+
+  if (carregando) {
+    return (
+      <section className="testimonials">
+        <div className="testimonials-loading">
+          Carregando avaliações...
+        </div>
+      </section>
+    )
+  }
+
+  if (erro) {
+    return (
+      <section className="testimonials">
+        <div className="testimonials-erro">
+          {erro}
+        </div>
+      </section>
+    )
+  }
+
   return (
-    <section className="testimonials" aria-label="Depoimentos de clientes — AG Cortinas">
+    <section className="testimonials" aria-label="Avaliações — AG Cortinas e Persianas">
 
       {/* Header */}
       <div className="testimonials-header">
-        <span className="testimonials-label">Depoimentos</span>
+        <span className="testimonials-label">Avaliações</span>
         <h2 className="testimonials-titulo">
           O que nossos clientes dizem
         </h2>
@@ -62,28 +74,36 @@ function Testimonials() {
 
       {/* Grid */}
       <div className="testimonials-grid">
-        {depoimentos.map(function(depoimento) {
+        {avaliacoes.map(function(avaliacao, index) {
           return (
-            <div
-              key={depoimento.id}
-              className="testimonials-card"
-              aria-label={'Depoimento de ' + depoimento.nome}
-            >
+            <div key={index} className="testimonials-card">
+
+              {/* Foto e nome */}
+              <div className="testimonials-autor">
+                <img
+                  src={avaliacao.profile_photo_url}
+                  alt={avaliacao.author_name}
+                  className="testimonials-foto"
+                />
+                <div>
+                  <span className="testimonials-nome">
+                    {avaliacao.author_name}
+                  </span>
+                  <span className="testimonials-tempo">
+                    {avaliacao.relative_time_description}
+                  </span>
+                </div>
+              </div>
+
               {/* Estrelas */}
-              <div className="testimonials-estrelas" aria-label="5 estrelas">
-                {'★'.repeat(depoimento.estrelas)}
+              <div className="testimonials-estrelas">
+                {'★'.repeat(avaliacao.rating)}
               </div>
 
               {/* Texto */}
               <p className="testimonials-texto">
-                "{depoimento.texto}"
+                "{avaliacao.text}"
               </p>
-
-              {/* Footer do card */}
-              <div className="testimonials-card-footer">
-                <span className="testimonials-nome">{depoimento.nome}</span>
-                <span className="testimonials-data">{depoimento.data}</span>
-              </div>
 
             </div>
           )
