@@ -1,0 +1,76 @@
+/* ===========================
+   FONTES — SATOSHI VARIABLE
+=========================== */
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-Variable.woff2') format('woff2'),
+       url('./assets/fonts/Satoshi-Variable.woff') format('woff');
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Satoshi';
+  src: url('./assets/fonts/Satoshi-VariableItalic.woff2') format('woff2'),
+       url('./assets/fonts/Satoshi-VariableItalic.woff') format('woff');
+  font-weight: 300 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ===========================
+   VARIÁVEIS GLOBAIS
+=========================== */
+
+:root {
+  /* Cores */
+  --color-bg: #FAF8F4;
+  --color-text: #2C2826;
+  --color-text-light: #7A7060;
+  --color-accent: #B8976A;
+  --color-border: #E8E2D9;
+  --color-section: #F0EAE0;
+
+  /* Fontes */
+  --font-title: 'Cormorant Garamond', serif;
+  --font-body: 'Satoshi', sans-serif;
+
+  /* Tamanhos de fonte */
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 2rem;
+  --text-2xl: 3.5rem;
+  --text-3xl: 5rem;
+
+  /* Espaçamentos */
+  --spacing-sm: 1rem;
+  --spacing-md: 2rem;
+  --spacing-lg: 4rem;
+  --spacing-xl: 8rem;
+
+  /* Transições */
+  --transition: all 0.3s ease;
+}
+
+/* ===========================
+   RESET GLOBAL
+=========================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-title);
+}

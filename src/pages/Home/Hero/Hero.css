@@ -1,0 +1,188 @@
+/* ===========================
+   HERO — MOBILE FIRST
+=========================== */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ===========================
+   IMAGEM DE FUNDO
+=========================== */
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-bg picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.hero-img {
+  width: 100%;
+  height: 120%; 
+  object-fit: cover;
+  object-position: center;
+  display: block;
+   
+}
+/* ===========================
+   OVERLAY ESCURO
+=========================== */
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+  to top,
+  rgba(0, 0, 0, 0.75) 10%,    /* mais escuro embaixo — texto */
+  rgba(0, 0, 0, 0.4) 50%,    /* meio */
+  rgba(0, 0, 0, 0.15) 100%   /* mais claro em cima */
+);
+}
+
+/* ===========================
+   CONTEÚDO — MOBILE
+=========================== */
+
+.hero-content {
+  position: absolute;
+  bottom: var(--spacing-lg);
+  left: var(--spacing-sm);
+  right: var(--spacing-sm);
+  z-index: 2;
+}
+
+.hero-title {
+  font-family: var(--font-title);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-bg);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--spacing-sm);
+  max-width: 800px;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 400;
+  color: rgba(250, 248, 244, 0.85);
+  max-width: 650px;
+  line-height: 1.6;
+}
+/* Texto fixo */
+.hero-title-fixo {
+  color: var(--color-bg);
+}
+
+/* Destaque dourado */
+.hero-title-destaque {
+  color: var(--color-accent);
+}
+
+/* Cursor piscando */
+.hero-cursor {
+  color: var(--color-accent);
+  font-weight: 300;
+  margin-left: 2px;
+}
+
+/* Seta de scroll */
+.hero-seta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin-top: var(--spacing-lg);
+  color: var(--color-bg);
+}
+
+.hero-seta span {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ===========================
+   TABLET — 768px
+=========================== */
+
+@media (min-width: 768px) {
+
+  .hero-content {
+    bottom: var(--spacing-lg);
+    left: var(--spacing-md);
+    right: var(--spacing-md);
+  }
+
+  .hero-title {
+    font-size: var(--text-2xl);
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-lg);
+    font-weight: 400;
+  }
+}
+
+/* ===========================
+   DESKTOP — 1024px
+=========================== */
+
+@media (min-width: 1024px) {
+
+  .hero-content {
+    bottom: var(--spacing-xl);
+    left: var(--spacing-lg);
+    right: var(--spacing-lg);
+  }
+
+  .hero-title {
+    font-size: var(--text-3xl);
+  }
+
+  .hero-subtitle {
+    font-size: var(--text-lg);
+    font-weight: 300;
+  }
+}
+
+/* ===========================
+   LARGE DESKTOP — 1440px
+=========================== */
+
+@media (min-width: 1440px) {
+
+  .hero-content {
+    bottom: var(--spacing-lg);
+    left: var(--spacing-xl);
+    right: var(--spacing-xl);
+    padding-top: 100px;
+  }
+
+  .hero-title {
+    font-size: 6rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.8rem;
+    font-weight: 300;
+    max-width: 750px;
+  }
+}

@@ -1,0 +1,37 @@
+    /* src/assets/fonts/fonts.css */
+
+    /* Definição para a fonte Satoshi Regular */
+    @font-face {
+     font-family: 'Satoshi'; /* Nome da família da fonte que será usada no CSS */
+     src: url('./Satoshi-Regular.woff2') format('woff2'), /* Caminho para o arquivo da fonte Regular */
+          url('./Satoshi-Regular.woff') format('woff');   /* Formato WOFF para compatibilidade */
+     font-weight: normal; /* ou 400 */
+     font-style: normal;
+   }
+
+   /* Definição para a fonte Satoshi Bold */
+   @font-face {
+     font-family: 'Satoshi'; /* O mesmo nome de família */
+     src: url('./Satoshi-Bold.woff2') format('woff2'),
+          url('./Satoshi-Bold.woff') format('woff');
+     font-weight: bold; /* ou 700 */
+     font-style: normal;
+   }
+
+   /* Opcional: Definição para a fonte Satoshi Light (se você copiou o arquivo) */
+   @font-face {
+     font-family: 'Satoshi';
+     src: url('./Satoshi-Light.woff2') format('woff2'),
+          url('./Satoshi-Light.woff') format('woff');
+     font-weight: 300; /* Peso numérico para Light */
+     font-style: normal;
+   }
+
+   /* Opcional: Definição para a fonte Satoshi Medium (se você copiou o arquivo) */
+   @font-face {
+     font-family: 'Satoshi';
+     src: url('./Satoshi-Medium.woff2') format('woff2'),
+          url('./Satoshi-Medium.woff') format('woff');
+     font-weight: 500; /* Peso numérico para Medium */
+     font-style: normal;
+   }
