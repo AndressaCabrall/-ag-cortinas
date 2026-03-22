@@ -1,11 +1,15 @@
 import Hero from './Hero/Hero'
-import BlogPreview from './BlogPreview/BlogPreview'
+import ProjectsPreview from './ProjectsPreview/ProjectsPreview'
+import Stats from './Stats/Stats'
 import Testimonials from './Testimonials/Testimonials'
+import BlogPreview from './BlogPreview/BlogPreview'
 
 function Home() {
   return (
     <main>
       <Hero />
+      <ProjectsPreview />
+      <Stats />
       <Testimonials />
       <BlogPreview />
     </main>

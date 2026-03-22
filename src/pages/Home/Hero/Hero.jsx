@@ -14,7 +14,7 @@ const frases = [
 ]
 
 function Hero() {
-
+  const heroRef = useRef(null) // Ref para a seção inteira
   const pictureRef = useRef(null)
   const textoRef = useRef(null)
   const destaqueRef = useRef(null)
@@ -23,27 +23,56 @@ function Hero() {
   const fraseAtualIndex = useRef(0)
   const primeiraFraseCompleta = useRef(false)
 
-  useEffect(function() {
-
+  useEffect(() => {
     const textoEl = textoRef.current
     const destaqueEl = destaqueRef.current
     const cursor = cursorRef.current
     const seta = setaRef.current
+    const img = pictureRef.current.querySelector('img')
 
     let ativo = true
+    
+    // --- 1. CONFIGURAÇÃO INICIAL E EFEITOS FIXOS ---
+    let ctx = gsap.context(() => {
+      // Cursor piscando
+      gsap.to(cursor, {
+        opacity: 0,
+        duration: 0.5,
+        repeat: -1,
+        yoyo: true,
+        ease: 'none',
+      })
 
-    // Cursor piscando
-    gsap.to(cursor, {
-      opacity: 0,
-      duration: 0.5,
-      repeat: -1,
-      yoyo: true,
-      ease: 'none',
-    })
+      // Seta começa invisível
+      gsap.set(seta, { opacity: 0, y: -10 })
 
-    // Seta começa invisível
-    gsap.set(seta, { opacity: 0, y: -10 })
+      // --- 2. ANIMAÇÃO DE PARALLAX (O que estava faltando) ---
+      // Movemos a imagem para baixo enquanto o scroll desce
+      gsap.to(img, {
+        yPercent: 20, // Suave deslocamento vertical
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: true
+        }
+      })
 
+      // Faz o conteúdo (texto e seta) sumir suavemente no scroll
+      gsap.to(".hero-content", {
+        opacity: 0,
+        y: -50,
+        scrollTrigger: {
+          trigger: heroRef.current,
+          start: "top top",
+          end: "40% top",
+          scrub: true
+        }
+      })
+    }, heroRef)
+
+    // --- 3. LÓGICA DE DIGITAÇÃO (Sua lógica original preservada) ---
     function mostrarSeta() {
       if (primeiraFraseCompleta.current) return
       primeiraFraseCompleta.current = true
@@ -53,8 +82,7 @@ function Hero() {
         y: 0,
         duration: 0.8,
         ease: 'power3.out',
-        onComplete: function() {
-          // Seta pulsando
+        onComplete: () => {
           gsap.to(seta, {
             y: 8,
             duration: 1,
@@ -68,70 +96,51 @@ function Hero() {
 
     function digitarTexto() {
       if (!ativo) return
-
       const frase = frases[fraseAtualIndex.current]
-      const textoCompleto = frase.texto
-      const destaqueCompleto = frase.destaque
-
       textoEl.textContent = ''
       destaqueEl.textContent = ''
 
       let indexTexto = 0
       let indexDestaque = 0
 
-      const intervalTexto = setInterval(function() {
+      const intervalTexto = setInterval(() => {
         if (!ativo) return clearInterval(intervalTexto)
-
-        if (indexTexto < textoCompleto.length) {
-          textoEl.textContent += textoCompleto[indexTexto]
+        if (indexTexto < frase.texto.length) {
+          textoEl.textContent += frase.texto[indexTexto]
           indexTexto++
         } else {
           clearInterval(intervalTexto)
-
-          const intervalDestaque = setInterval(function() {
+          const intervalDestaque = setInterval(() => {
             if (!ativo) return clearInterval(intervalDestaque)
-
-            if (indexDestaque < destaqueCompleto.length) {
-              destaqueEl.textContent += destaqueCompleto[indexDestaque]
+            if (indexDestaque < frase.destaque.length) {
+              destaqueEl.textContent += frase.destaque[indexDestaque]
               indexDestaque++
             } else {
               clearInterval(intervalDestaque)
-
-              // Mostra a seta depois da primeira frase completa
               mostrarSeta()
-
-              setTimeout(function() {
-                if (ativo) apagarTexto(textoEl, destaqueEl)
-              }, 2000)
+              setTimeout(() => { if (ativo) apagarTexto() }, 2000)
             }
           }, 80)
         }
       }, 50)
     }
 
-    function apagarTexto(textoEl, destaqueEl) {
+    function apagarTexto() {
       if (!ativo) return
-
-      const intervalApagarDestaque = setInterval(function() {
+      const intervalApagarDestaque = setInterval(() => {
         if (!ativo) return clearInterval(intervalApagarDestaque)
-
         if (destaqueEl.textContent.length > 0) {
           destaqueEl.textContent = destaqueEl.textContent.slice(0, -1)
         } else {
           clearInterval(intervalApagarDestaque)
-
-          const intervalApagarTexto = setInterval(function() {
+          const intervalApagarTexto = setInterval(() => {
             if (!ativo) return clearInterval(intervalApagarTexto)
-
             if (textoEl.textContent.length > 0) {
               textoEl.textContent = textoEl.textContent.slice(0, -1)
             } else {
               clearInterval(intervalApagarTexto)
               fraseAtualIndex.current = (fraseAtualIndex.current + 1) % frases.length
-
-              setTimeout(function() {
-                if (ativo) digitarTexto()
-              }, 500)
+              setTimeout(() => { if (ativo) digitarTexto() }, 500)
             }
           }, 30)
         }
@@ -140,32 +149,27 @@ function Hero() {
 
     digitarTexto()
 
-    return function() {
+    // --- 4. CLEANUP (Limpeza) ---
+    return () => {
       ativo = false
+      ctx.revert() // Limpa todas as animações do GSAP de uma vez
     }
-
   }, [])
 
   return (
-    <section className="hero" aria-label="Seção Hero — AG Cortinas e Persianas">
-
+    <section className="hero" ref={heroRef} aria-label="Seção Hero">
       <div className="hero-bg">
         <picture ref={pictureRef}>
-          <source
-            media="(max-width: 600px)"
-            srcSet={heroMobile}
-            type="image/webp"
-          />
+          <source media="(max-width: 600px)" srcSet={heroMobile} type="image/webp" />
           <img
             src={heroDesktop}
-            alt="Cortinas e persianas sob medida — AG Cortinas & Persianas"
+            alt="Cortinas e persianas sob medida"
             className="hero-img"
           />
         </picture>
       </div>
 
       <div className="hero-content">
-
         <h1 className="hero-title">
           <span className="hero-title-fixo">Cortinas sob medida </span>
           <br />
@@ -175,17 +179,14 @@ function Hero() {
           <span ref={cursorRef} className="hero-cursor">|</span>
         </h1>
 
-        {/* Seta de scroll */}
         <div ref={setaRef} className="hero-seta">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <polyline points="19 12 12 19 5 12"></polyline>
           </svg>
           <span>scroll</span>
         </div>
-
       </div>
-
     </section>
   )
 }
