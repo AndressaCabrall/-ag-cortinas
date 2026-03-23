@@ -7,6 +7,8 @@
   flex-direction: column;
   min-height: 100vh;
   background: var(--color-bg);
+  position: relative;   /* ← fix footer reveal */
+  z-index: 10;          /* ← fix footer reveal */
 }
 
 .contact-form-wrapper {
@@ -34,7 +36,52 @@
   max-width: 500px;
 }
 
+/* ===========================
+   TABS
+=========================== */
+
+.contact-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--color-border);
+  margin-bottom: var(--spacing-sm);
+}
+
+.contact-tab {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  padding: 0.6rem 0;
+  margin-right: var(--spacing-md);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.contact-tab:hover  { color: var(--color-text); }
+
+.contact-tab.active {
+  color: var(--color-text);
+  border-bottom-color: var(--color-accent);
+}
+
+/* ===========================
+   FORM
+=========================== */
+
 .contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.contact-row {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-sm);
@@ -76,10 +123,46 @@
   border-bottom-color: var(--color-accent);
 }
 
-.contact-field textarea {
-  resize: none;
-  rows: 2;
+.contact-field textarea { resize: none; }
+
+.contact-field input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
 }
+
+/* ===========================
+   AGENDA INFO
+=========================== */
+
+.contact-agenda-info {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--color-text-light);
+  line-height: 1.5;
+  padding: 0.75rem 1rem;
+  border-left: 2px solid var(--color-accent);
+  background: color-mix(in srgb, var(--color-accent) 5%, transparent);
+}
+
+.contact-agenda-info strong { color: var(--color-text); }
+
+/* ===========================
+   FEEDBACK
+=========================== */
+
+.contact-feedback {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  padding: 0.6rem 0;
+}
+
+.contact-feedback.success { color: #22a06b; }
+.contact-feedback.error   { color: #c9372c; }
+
+/* ===========================
+   BUTTONS
+=========================== */
 
 .contact-btn-submit {
   background: var(--color-text);
@@ -96,32 +179,15 @@
   width: 100%;
 }
 
-.contact-btn-submit:hover {
-  background: var(--color-accent);
-}
+.contact-btn-submit:hover    { background: var(--color-accent); }
+.contact-btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
-.contact-btn-whatsapp {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background: #25D366;
-  color: #ffffff;
-  text-decoration: none;
-  padding: 0.7rem 2rem;
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  transition: var(--transition);
-  width: 100%;
-}
 
-.contact-btn-whatsapp:hover {
-  background: #128C7E;
-}
 
-/* Image — hidden on mobile */
+/* ===========================
+   IMAGE — hidden on mobile
+=========================== */
+
 .contact-image {
   display: none;
   position: relative;
@@ -181,9 +247,7 @@
   font-weight: 400;
 }
 
-.contact-info-item a:hover {
-  color: var(--color-accent);
-}
+.contact-info-item a:hover { color: var(--color-accent); }
 
 /* ===========================
    TABLET — 768px
@@ -195,9 +259,14 @@
     padding: 6rem var(--spacing-lg) var(--spacing-md);
   }
 
-  .contact-title {
-    font-size: var(--text-2xl);
+  .contact-title { font-size: var(--text-2xl); }
+
+  .contact-row {
+    flex-direction: row;
+    gap: var(--spacing-md);
   }
+
+  .contact-row .contact-field { flex: 1; }
 }
 
 /* ===========================
@@ -219,13 +288,8 @@
     justify-content: center;
   }
 
-  .contact-title {
-    font-size: var(--text-xl);
-  }
-
-  .contact-subtitle {
-    font-size: var(--text-sm);
-  }
+  .contact-title    { font-size: var(--text-xl); }
+  .contact-subtitle { font-size: var(--text-sm); }
 
   .contact-image {
     display: block;
@@ -242,17 +306,10 @@
 
 @media (min-width: 1440px) {
 
-  .contact-form-wrapper {
-    padding: 6rem 6rem var(--spacing-md);
-  }
+  .contact-form-wrapper { padding: 6rem 6rem var(--spacing-md); }
 
-  .contact-title {
-    font-size: var(--text-2xl);
-  }
+  .contact-title { font-size: var(--text-2xl); }
 
   .contact-info-item a,
-  .contact-info-item span {
-    font-size: var(--text-lg);
-  }
+  .contact-info-item span { font-size: var(--text-lg); }
 }
-

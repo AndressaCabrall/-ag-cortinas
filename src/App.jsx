@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom"
 import { useEffect, useRef } from "react"
 import { gsap } from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
@@ -15,11 +15,27 @@ import WhatsAppBtn from "./components/WhatsAppBtn/WhatsAppBtn.jsx"
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
-function App() {
+// Detecta mudança de rota e recalcula alturas do ScrollSmoother
+function ScrollSmootherRefresh({ smootherRef }) {
+  const location = useLocation()
 
+  useEffect(() => {
+    if (smootherRef.current) {
+      // Aguarda o React terminar de renderizar a nova página
+      setTimeout(() => {
+        smootherRef.current.scrollTo(0, true) // volta pro topo suavemente
+        ScrollTrigger.refresh()               // recalcula todas as alturas
+      }, 100)
+    }
+  }, [location.pathname])
+
+  return null
+}
+
+function App() {
   const smootherRef = useRef(null)
 
-  useEffect(function() {
+  useEffect(function () {
     smootherRef.current = ScrollSmoother.create({
       wrapper: '#smooth-wrapper',
       content: '#smooth-content',
@@ -27,7 +43,7 @@ function App() {
       effects: true,
     })
 
-    return function() {
+    return function () {
       if (smootherRef.current) {
         smootherRef.current.kill()
       }
@@ -38,6 +54,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <WhatsAppBtn />
+      <ScrollSmootherRefresh smootherRef={smootherRef} />
 
       <div id="smooth-wrapper">
         <div id="smooth-content">
@@ -52,7 +69,7 @@ function App() {
           <Footer />
         </div>
       </div>
-     
+
     </BrowserRouter>
   )
 }

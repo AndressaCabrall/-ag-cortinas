@@ -1,303 +1,285 @@
 /* ===========================
    ABOUT — MOBILE FIRST
 =========================== */
-
+ 
 .about {
-    min-height: 100vh;
-    background: var(--color-bg);
-  }
-  
-  /* Hero */
+  min-height: 100vh;
+  background: var(--color-bg);
+  position: relative;   /* ← fix footer reveal */
+  z-index: 10;          /* ← fix footer reveal */
+}
+ 
+/* Hero */
+.about-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: 8rem var(--spacing-md) var(--spacing-xl);
+  background: var(--color-bg);
+}
+ 
+.about-label {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--color-accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+ 
+.about-titulo {
+  font-family: var(--font-title);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+  max-width: 700px;
+}
+ 
+/* Foto + texto */
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) var(--spacing-md);
+}
+ 
+.about-foto-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+ 
+.about-foto {
+  width: 80%;
+  max-width: 400px;
+  height: 500px;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+ 
+.about-texto-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+ 
+.about-texto-titulo {
+  font-family: var(--font-title);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+ 
+.about-texto {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 400;
+  color: var(--color-text-light);
+  line-height: 1.8;
+}
+ 
+/* Números */
+.about-numeros {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-xl) var(--spacing-md);
+  background: var(--color-text);
+  text-align: center;
+}
+ 
+.about-numero-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+ 
+.about-numero-valor {
+  font-family: var(--font-title);
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  line-height: 1;
+}
+ 
+.about-numero-label {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: rgba(250, 248, 244, 0.7);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+ 
+/* Diferenciais */
+.about-diferenciais {
+  padding: var(--spacing-xl) var(--spacing-md);
+  background: var(--color-section);
+}
+ 
+.about-diferenciais-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+  text-align: center;
+  align-items: center;
+}
+ 
+.about-diferenciais-titulo {
+  font-family: var(--font-title);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+}
+ 
+.about-diferenciais-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+}
+ 
+.about-diferencial-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--color-bg);
+}
+ 
+.about-diferencial-icone {
+  font-size: var(--text-xl);
+  color: var(--color-accent);
+}
+ 
+.about-diferencial-titulo {
+  font-family: var(--font-title);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+}
+ 
+.about-diferencial-texto {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 400;
+  color: var(--color-text-light);
+  line-height: 1.6;
+}
+ 
+/* CTA */
+.about-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-xl) var(--spacing-md);
+  background: var(--color-bg);
+}
+ 
+.about-cta-titulo {
+  font-family: var(--font-title);
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+  max-width: 500px;
+}
+ 
+.about-cta-texto {
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 400;
+  color: var(--color-text-light);
+  line-height: 1.6;
+  max-width: 500px;
+}
+ 
+.about-cta-btn {
+  text-decoration: none;
+  background: var(--color-text);
+  color: var(--color-bg);
+  padding: 1rem 2.5rem;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: var(--transition);
+}
+ 
+.about-cta-btn:hover { background: var(--color-accent); }
+ 
+/* ===========================
+   TABLET — 768px
+=========================== */
+ 
+@media (min-width: 768px) {
+ 
   .about-hero {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    padding: 8rem var(--spacing-md) var(--spacing-xl);
-    background: var(--color-bg);
+    padding: 8rem var(--spacing-lg) var(--spacing-xl);
   }
-  
-  .about-label {
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-accent);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-  
-  .about-titulo {
-    font-family: var(--font-title);
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    color: var(--color-text);
-    line-height: 1.2;
-    max-width: 700px;
-  }
-  
-  /* Foto + texto */
+ 
+  .about-titulo { font-size: var(--text-3xl); }
+ 
   .about-content {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md); 
-    padding: var(--spacing-md) var(--spacing-md); 
+    flex-direction: row;
+    align-items: center;
+    padding: var(--spacing-xl) var(--spacing-lg);
   }
-  
+ 
   .about-foto-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center; 
+    width: 45%;
+    flex-shrink: 0;
   }
-  
-  .about-foto {
-    width: 80%; /* não ocupa tudo — fica centralizada */
-    max-width: 400px;
-    height: 500px;
-    object-fit: cover;
-    object-position: center top;
-    display: block;
-  }
-  .about-texto-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-  }
-  
-  .about-texto-titulo {
-    font-family: var(--font-title);
-    font-size: var(--text-xl);
-    font-weight: 700;
-    color: var(--color-text);
-    line-height: 1.3;
-  }
-  
-  .about-texto {
-    font-family: var(--font-body);
-    font-size: var(--text-md);
-    font-weight: 400;
-    color: var(--color-text-light);
-    line-height: 1.8;
-  }
-  
-  /* Números */
+ 
   .about-numeros {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-lg);
-    padding: var(--spacing-xl) var(--spacing-md);
-    background: var(--color-text);
-    text-align: center;
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--spacing-xl);
   }
-  
-  .about-numero-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .about-numero-valor {
-    font-family: var(--font-title);
-    font-size: 5rem;
-    font-weight: 700;
-    color: var(--color-accent);
-    line-height: 1;
-  }
-  
-  .about-numero-label {
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-weight: 500;
-    color: rgba(250, 248, 244, 0.7);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  
-  /* Diferenciais */
-  .about-diferenciais {
-    padding: var(--spacing-xl) var(--spacing-md);
-    background: var(--color-section);
-  }
-  
-  .about-diferenciais-header {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-lg);
-    text-align: center;
-    align-items: center;
-  }
-  
-  .about-diferenciais-titulo {
-    font-family: var(--font-title);
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    color: var(--color-text);
-    line-height: 1.2;
-  }
-  
+ 
   .about-diferenciais-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-md);
+    grid-template-columns: 1fr 1fr 1fr;
   }
-  
-  .about-diferencial-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-md);
-    background: var(--color-bg);
+}
+ 
+/* ===========================
+   DESKTOP — 1024px
+=========================== */
+ 
+@media (min-width: 1024px) {
+ 
+  .about-hero {
+    padding: 8rem var(--spacing-xl) var(--spacing-xl);
   }
-  
-  .about-diferencial-icone {
-    font-size: var(--text-xl);
-    color: var(--color-accent);
+ 
+  .about-content {
+    padding: var(--spacing-xl) var(--spacing-xl);
+    gap: var(--spacing-xl);
   }
-  
-  .about-diferencial-titulo {
-    font-family: var(--font-title);
-    font-size: var(--text-lg);
-    font-weight: 700;
-    color: var(--color-text);
-  }
-  
-  .about-diferencial-texto {
-    font-family: var(--font-body);
-    font-size: var(--text-md);
-    font-weight: 400;
-    color: var(--color-text-light);
-    line-height: 1.6;
-  }
-  
-  /* CTA */
-  .about-cta {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: var(--spacing-md);
-    padding: var(--spacing-xl) var(--spacing-md);
-    background: var(--color-bg);
-  }
-  
-  .about-cta-titulo {
-    font-family: var(--font-title);
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    color: var(--color-text);
-    line-height: 1.2;
-    max-width: 500px;
-  }
-  
-  .about-cta-texto {
-    font-family: var(--font-body);
-    font-size: var(--text-md);
-    font-weight: 400;
-    color: var(--color-text-light);
-    line-height: 1.6;
-    max-width: 500px;
-  }
-  
-  .about-cta-btn {
-    text-decoration: none;
-    background: var(--color-text);
-    color: var(--color-bg);
-    padding: 1rem 2.5rem;
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    transition: var(--transition);
-  }
-  
-  .about-cta-btn:hover {
-    background: var(--color-accent);
-  }
-  
-  /* ===========================
-     TABLET — 768px
-  =========================== */
-  
-  @media (min-width: 768px) {
-  
-    .about-hero {
-      padding: 8rem var(--spacing-lg) var(--spacing-xl);
-    }
-  
-    .about-titulo {
-      font-size: var(--text-3xl);
-    }
-  
-    .about-content {
-      flex-direction: row;
-      align-items: center;
-      padding: var(--spacing-xl) var(--spacing-lg);
-    }
-  
-    .about-foto-wrapper {
-      width: 45%;
-      flex-shrink: 0;
-    }
-  
-    .about-numeros {
-      flex-direction: row;
-      justify-content: center;
-      gap: var(--spacing-xl);
-    }
-  
-    .about-diferenciais-grid {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-  }
-  
-  /* ===========================
-     DESKTOP — 1024px
-  =========================== */
-  
-  @media (min-width: 1024px) {
-  
-    .about-hero {
-      padding: 8rem var(--spacing-xl) var(--spacing-xl);
-    }
-  
-    .about-content {
-      padding: var(--spacing-xl) var(--spacing-xl);
-      gap: var(--spacing-xl);
-    }
-  
-    .about-titulo {
-      font-size: 4rem;
-    }
-  
-    .about-texto-titulo {
-      font-size: var(--text-2xl);
-    }
-  }
-  
-  /* ===========================
-     LARGE DESKTOP — 1440px
-  =========================== */
-  
-  @media (min-width: 1440px) {
-  
-    .about-hero {
-      padding: 8rem 8rem var(--spacing-xl);
-    }
-  
-    .about-content {
-      padding: var(--spacing-xl) 8rem;
-    }
-  
-    .about-diferenciais {
-      padding: var(--spacing-xl) 8rem;
-    }
-  
-    .about-cta {
-      padding: var(--spacing-xl) 8rem;
-    }
-  
-    .about-titulo {
-      font-size: 5rem;
-    }
-  }
+ 
+  .about-titulo { font-size: 4rem; }
+ 
+  .about-texto-titulo { font-size: var(--text-2xl); }
+}
+ 
+/* ===========================
+   LARGE DESKTOP — 1440px
+=========================== */
+ 
+@media (min-width: 1440px) {
+ 
+  .about-hero    { padding: 8rem 8rem var(--spacing-xl); }
+  .about-content { padding: var(--spacing-xl) 8rem; }
+  .about-diferenciais { padding: var(--spacing-xl) 8rem; }
+  .about-cta     { padding: var(--spacing-xl) 8rem; }
+  .about-titulo  { font-size: 5rem; }
+}
+ 
