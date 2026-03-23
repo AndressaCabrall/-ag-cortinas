@@ -1,0 +1,117 @@
+/* ===========================
+   COOKIE BANNER — LGPD
+=========================== */
+
+.cookie-banner {
+    position: fixed;
+    bottom: var(--spacing-md);
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 2rem);
+    max-width: 700px;
+    background: var(--color-text);
+    z-index: 9999;
+    padding: var(--spacing-md);
+    animation: cookie-slide-up 0.5s ease forwards;
+  }
+  
+  @keyframes cookie-slide-up {
+    from {
+      opacity: 0;
+      transform: translateX(-50%) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+  }
+  
+  .cookie-banner-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .cookie-banner-texto {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 400;
+    color: rgba(250, 248, 244, 0.8);
+    line-height: 1.6;
+  }
+  
+  .cookie-banner-link {
+    color: var(--color-accent);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+  }
+  
+  .cookie-banner-link:hover {
+    opacity: 0.8;
+  }
+  
+  .cookie-banner-acoes {
+    display: flex;
+    gap: var(--spacing-sm);
+    align-items: center;
+  }
+  
+  .cookie-btn-aceitar {
+    background: var(--color-accent);
+    color: var(--color-bg);
+    border: none;
+    padding: 0.6rem 1.5rem;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+  }
+  
+  .cookie-btn-aceitar:hover {
+    opacity: 0.85;
+  }
+  
+  .cookie-btn-recusar {
+    background: transparent;
+    color: rgba(250, 248, 244, 0.5);
+    border: none;
+    padding: 0.6rem 1rem;
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+  }
+  
+  .cookie-btn-recusar:hover {
+    color: rgba(250, 248, 244, 0.9);
+  }
+  
+  /* ===========================
+     TABLET — 768px
+  =========================== */
+  
+  @media (min-width: 768px) {
+  
+    .cookie-banner-content {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-md);
+    }
+  
+    .cookie-banner-texto {
+      flex: 1;
+    }
+  
+    .cookie-banner-acoes {
+      flex-shrink: 0;
+    }
+  }
+  

@@ -9,9 +9,13 @@ import About from "./pages/About/About.jsx"
 import Blog from "./pages/Blog/Blog.jsx"
 import BlogPost from "./pages/BlogPost/BlogPost.jsx"
 import Contact from "./pages/Contact/Contact.jsx"
+import Privacy from "./pages/Privacy/Privacy.jsx"
 import Navbar from "./components/Navbar/Navbar.jsx"
 import Footer from "./components/Footer/Footer.jsx"
 import WhatsAppBtn from "./components/WhatsAppBtn/WhatsAppBtn.jsx"
+import CookieBanner from "./components/CookieBanner/CookieBanner.jsx"
+
+
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
 
@@ -54,6 +58,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <WhatsAppBtn />
+      <CookieBanner />
       <ScrollSmootherRefresh smootherRef={smootherRef} />
 
       <div id="smooth-wrapper">
@@ -65,6 +70,7 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/privacidade" element={<Privacy />} />
           </Routes>
           <Footer />
         </div>
