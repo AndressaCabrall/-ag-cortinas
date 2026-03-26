@@ -1,0 +1,328 @@
+
+/* ===================== LOGIN ===================== */
+.admin-login {
+  min-height: 100vh;
+  background: #0e0e0e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;   /* ← fix footer reveal */
+  z-index: 10;          /* ← fix footer reveal */
+}
+
+.admin-login-box {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+}
+
+.admin-login-logo {
+  font-size: 32px;
+  color: #b8860b;
+  margin-bottom: 20px;
+}
+
+.admin-login-titulo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  color: #f0ede8;
+  margin-bottom: 6px;
+}
+
+.admin-login-sub {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 32px;
+}
+
+.admin-login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-login-input {
+  background: #0e0e0e;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #f0ede8;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.admin-login-input:focus { border-color: #b8860b; }
+.admin-login-input.erro   { border-color: #e05a5a; }
+
+.admin-login-erro {
+  font-size: 13px;
+  color: #e05a5a;
+  margin: 0;
+}
+
+.admin-login-btn {
+  background: #b8860b;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.admin-login-btn:hover { background: #a07008; }
+
+/* ===================== PAINEL ===================== */
+.admin {
+  min-height: 100vh;
+  background: #0e0e0e;
+  color: #d0ccc5;
+  font-family: 'Inter', sans-serif;
+  padding-bottom: 60px;
+  position: relative;   /* ← fix footer reveal */
+  z-index: 10;          /* ← fix footer reveal */
+}
+
+/* Header */
+.admin-header {
+  background: #1a1a1a;
+  border-bottom: 1px solid #2a2a2a;
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin-header-icone {
+  font-size: 28px;
+  color: #b8860b;
+}
+
+.admin-header-titulo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  color: #f0ede8;
+  margin: 0;
+}
+
+.admin-header-sub {
+  font-size: 12px;
+  color: #555;
+  margin: 2px 0 0;
+}
+
+.admin-header-right {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-btn-refresh,
+.admin-btn-sair {
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: transparent;
+  color: #aaa;
+}
+
+.admin-btn-refresh:hover { border-color: #b8860b; color: #b8860b; }
+.admin-btn-sair:hover    { border-color: #e05a5a; color: #e05a5a; }
+
+/* Contadores / Filtros */
+.admin-contadores {
+  display: flex;
+  gap: 12px;
+  padding: 24px 32px 0;
+  flex-wrap: wrap;
+}
+
+.admin-contador {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 10px;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 100px;
+}
+
+.admin-contador:hover { border-color: #444; }
+
+.admin-contador.ativo { border-color: #b8860b; background: #1e1a10; }
+
+.admin-contador-numero {
+  font-size: 28px;
+  font-weight: 700;
+  color: #f0ede8;
+  line-height: 1;
+}
+
+.admin-contador-label {
+  font-size: 12px;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.admin-contador-pendente.ativo   .admin-contador-numero { color: #e0a020; }
+.admin-contador-confirmado.ativo .admin-contador-numero { color: #4caf7d; }
+.admin-contador-cancelado.ativo  .admin-contador-numero { color: #e05a5a; }
+
+/* Estados */
+.admin-erro,
+.admin-loading {
+  margin: 24px 32px;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.admin-erro    { background: #2a1010; border: 1px solid #5a1a1a; color: #e05a5a; }
+.admin-loading { color: #666; }
+
+.admin-vazio {
+  margin: 40px 32px;
+  text-align: center;
+  color: #444;
+  font-size: 15px;
+}
+
+/* Tabela */
+.admin-tabela-wrapper {
+  margin: 24px 32px 0;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid #2a2a2a;
+}
+
+.admin-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.admin-tabela thead {
+  background: #141414;
+}
+
+.admin-tabela th {
+  text-align: left;
+  padding: 14px 16px;
+  color: #555;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 11px;
+  border-bottom: 1px solid #2a2a2a;
+  white-space: nowrap;
+}
+
+.admin-tabela td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #1e1e1e;
+  vertical-align: top;
+}
+
+.admin-linha:last-child td { border-bottom: none; }
+
+.admin-linha:hover td { background: #151515; }
+
+.admin-linha-pendente   { }
+.admin-linha-confirmado { }
+.admin-linha-cancelado  { opacity: 0.6; }
+
+/* Células */
+.admin-id { color: #444; font-size: 12px; }
+
+.admin-nome { display: flex; flex-direction: column; gap: 4px; }
+.admin-nome-texto { color: #f0ede8; font-weight: 500; }
+.admin-criado { font-size: 11px; color: #444; }
+
+.admin-contato { display: flex; flex-direction: column; gap: 4px; }
+.admin-link { color: #b8860b; text-decoration: none; font-size: 12px; }
+.admin-link:hover { text-decoration: underline; }
+
+.admin-data { display: flex; flex-direction: column; gap: 3px; }
+.admin-data-dia  { color: #f0ede8; font-weight: 500; }
+.admin-data-hora { font-size: 12px; color: #666; }
+
+.admin-endereco { display: flex; flex-direction: column; gap: 3px; max-width: 200px; }
+.admin-complemento { font-size: 11px; color: #555; }
+.admin-obs { font-size: 11px; color: #b8860b; cursor: help; }
+
+/* Status badges */
+.admin-status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.status-pendente   { background: #2a2010; color: #e0a020; border: 1px solid #4a3a10; }
+.status-confirmado { background: #102a18; color: #4caf7d; border: 1px solid #1a4a28; }
+.status-cancelado  { background: #2a1010; color: #e05a5a; border: 1px solid #4a1a1a; }
+
+/* Ações */
+.admin-acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-acao {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+}
+
+.admin-acao:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.admin-acao-confirmar { background: #1a3a28; color: #4caf7d; }
+.admin-acao-cancelar  { background: #3a1a1a; color: #e05a5a; }
+.admin-acao-pendente  { background: #2a2a1a; color: #e0a020; }
+
+.admin-acao-confirmar:hover:not(:disabled) { background: #1e4a30; }
+.admin-acao-cancelar:hover:not(:disabled)  { background: #4a1e1e; }
+.admin-acao-pendente:hover:not(:disabled)  { background: #3a3a1e; }
+
+/* ===================== RESPONSIVO ===================== */
+@media (max-width: 768px) {
+  .admin-header  { padding: 16px 20px; }
+  .admin-contadores { padding: 16px 20px 0; }
+  .admin-tabela-wrapper { margin: 16px 20px 0; }
+
+  .admin-tabela th,
+  .admin-tabela td { padding: 10px 12px; }
+}

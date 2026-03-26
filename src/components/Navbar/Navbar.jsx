@@ -1,70 +1,60 @@
-import { Link, useLocation } from 'react-router-dom'
-import { useState, useEffect, useRef } from 'react'
-import logo from '../../assets/images/icons/logo.svg'
-import './Navbar.css'
+import { Link, useLocation } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import logo from '../../assets/images/icons/logo.svg';
+import './Navbar.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function Navbar() {
+  const navbarRef = useRef(null);
+  const location = useLocation();
+  const [menuAberto, setMenuAberto] = useState(false);
 
-  const navbarRef = useRef(null)
-  const location = useLocation()
+  useEffect(() => {
+    const navbar = navbarRef.current;
 
-  const estadoDoMenu = useState(false)
-  const menuAberto = estadoDoMenu[0]
-  const setMenuAberto = estadoDoMenu[1]
+    // 1. Limpeza de gatilhos ao trocar de rota
+    ScrollTrigger.getAll().forEach(t => t.kill());
+    navbar.classList.remove('dark-theme'); // Reset padrão
 
-  useEffect(function() {
-    const navbar = navbarRef.current
+    // 2. Lógica para Páginas Internas
+    // Se não for a Home, a maioria das páginas é clara (texto preto)
+    const PAGINAS_CLARAS = ['/contact', '/about', '/blog', '/projects', '/privacidade'];
+    const ehPaginaClara = PAGINAS_CLARAS.includes(location.pathname) || location.pathname.startsWith('/blog/');
 
-    // Páginas com fundo claro — navbar escura
-    const paginasClaras = ['/contact', '/about', '/blog', '/projects']
-
-    if (paginasClaras.includes(location.pathname)) {
-      navbar.classList.add('clara')
-    } else {
-      navbar.classList.remove('clara')
+    if (location.pathname !== '/') {
+      if (ehPaginaClara) navbar.classList.add('dark-theme');
+      return;
     }
 
-  }, [location]) // roda toda vez que a rota muda
+    // 3. Lógica para a Home (ScrollTrigger Automático)
+    // Ele vai procurar por qualquer seção que tenha [data-theme="light-bg"]
+    const secoesClaras = document.querySelectorAll('[data-theme="light-bg"]');
 
-  function alternarMenu() {
-    if (menuAberto === true) {
-      setMenuAberto(false)
-    } else {
-      setMenuAberto(true)
-    }
-  }
+    secoesClaras.forEach(secao => {
+      ScrollTrigger.create({
+        trigger: secao,
+        start: "top 80px", // Detecta quando a seção chega na navbar
+        end: "bottom 80px",
+        onEnter: () => navbar.classList.add('dark-theme'),
+        onEnterBack: () => navbar.classList.add('dark-theme'),
+        onLeave: () => navbar.classList.remove('dark-theme'),
+        onLeaveBack: () => navbar.classList.remove('dark-theme'),
+      });
+    });
 
-  function fecharMenu() {
-    setMenuAberto(false)
-  }
+    return () => ScrollTrigger.getAll().forEach(t => t.kill());
+  }, [location.pathname]);
 
-  function labelDoHamburguer() {
-    if (menuAberto === true) {
-      return 'Fechar menu'
-    } else {
-      return 'Abrir menu'
-    }
-  }
-
-  function classeDoHamburguer() {
-    if (menuAberto === true) {
-      return 'navbar-hamburguer ativo'
-    } else {
-      return 'navbar-hamburguer'
-    }
-  }
-
-  function classeDoMenuMobile() {
-    if (menuAberto === true) {
-      return 'navbar-mobile aberto'
-    } else {
-      return 'navbar-mobile'
-    }
-  }
+  // Fecha menu ao trocar de rota
+  useEffect(() => {
+    setMenuAberto(false);
+  }, [location.pathname]);
 
   return (
     <header className="navbar" ref={navbarRef} role="banner">
-
       <Link to="/" className="navbar-logo" aria-label="Ir para página inicial">
         <img src={logo} alt="AG Cortinas e Persianas — Logo" />
       </Link>
@@ -79,42 +69,31 @@ function Navbar() {
         </ul>
       </nav>
 
-      <Link
-        to="/contact"
-        className="navbar-cta"
-        aria-label="Entre em contato com a AG Cortinas e Persianas"
-      >
+      <Link to="/contact" className="navbar-cta">
         Entre em Contato
       </Link>
 
       <button
-        className={classeDoHamburguer()}
-        aria-label={labelDoHamburguer()}
-        aria-expanded={menuAberto}
-        onClick={alternarMenu}
+        className={`navbar-hamburguer ${menuAberto ? 'ativo' : ''}`}
+        aria-label={menuAberto ? 'Fechar menu' : 'Abrir menu'}
+        onClick={() => setMenuAberto(prev => !prev)}
       >
-        <span></span>
-        <span></span>
-        <span></span>
+        <span></span><span></span><span></span>
       </button>
 
-      <div
-        className={classeDoMenuMobile()}
-        aria-hidden={menuAberto === false}
-      >
-        <nav aria-label="Menu mobile">
-          <ul role="list">
-            <li><Link to="/" onClick={fecharMenu}>Home</Link></li>
-            <li><Link to="/projects" onClick={fecharMenu}>Projetos</Link></li>
-            <li><Link to="/about" onClick={fecharMenu}>Sobre</Link></li>
-            <li><Link to="/blog" onClick={fecharMenu}>Blog</Link></li>
-            <li><Link to="/contact" onClick={fecharMenu}>Contato</Link></li>
+      <div className={`navbar-mobile ${menuAberto ? 'aberto' : ''}`}>
+        <nav>
+          <ul>
+            <li><Link to="/" onClick={() => setMenuAberto(false)}>Home</Link></li>
+            <li><Link to="/projects" onClick={() => setMenuAberto(false)}>Projetos</Link></li>
+            <li><Link to="/about" onClick={() => setMenuAberto(false)}>Sobre</Link></li>
+            <li><Link to="/blog" onClick={() => setMenuAberto(false)}>Blog</Link></li>
+            <li><Link to="/contact" onClick={() => setMenuAberto(false)}>Contato</Link></li>
           </ul>
         </nav>
       </div>
-
     </header>
-  )
+  );
 }
 
-export default Navbar
+export default Navbar;

@@ -54,6 +54,7 @@ function Footer() {
             src={footerDesktop}
             alt="Cortinas e persianas sob medida — AG Cortinas Joinville"
             className="footer-img"
+             fetchpriority="high"
           />
         </picture>
       </div>

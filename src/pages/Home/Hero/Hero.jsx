@@ -163,8 +163,9 @@ function Hero() {
           <source media="(max-width: 600px)" srcSet={heroMobile} type="image/webp" />
           <img
             src={heroDesktop}
-            alt="Cortinas e persianas sob medida"
+            alt="Cortina de linho sob medida instalada em sala de estar moderna"
             className="hero-img"
+            fetchpriority="high"
           />
         </picture>
       </div>

@@ -1,5 +1,5 @@
 /* ===========================
-   NAVBAR — MOBILE FIRST
+    NAVBAR — MOBILE FIRST
 =========================== */
 
 .navbar {
@@ -13,23 +13,20 @@
   justify-content: space-between;
   padding: var(--spacing-sm) var(--spacing-md);
   background: transparent;
-  transition: var(--transition);
+  transition: all 0.4s ease; /* Transição suave para troca de temas */
 }
 
 /* ===========================
-   LOGO
+    LOGO & ELEMENTOS PADRÃO (Para fundos Escuros)
 =========================== */
 
 .navbar-logo img {
   height: 55px;
   width: auto;
   display: block;
-  filter: invert(1);
+  filter: brightness(0) invert(1); /* Logo Branca */
+  transition: filter 0.3s ease;
 }
-
-/* ===========================
-   MENU DESKTOP
-=========================== */
 
 .navbar-menu {
   display: none;
@@ -41,29 +38,21 @@
   gap: var(--spacing-md);
 }
 
-.navbar-menu ul li a {
+.navbar-menu ul li a, .nav-links {
   text-decoration: none;
-  color: #ffffff;
+  color: #ffffff !important; 
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 500;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  transition: var(--transition);
+  transition: color 0.3s ease;
 }
-
-.navbar-menu ul li a:hover {
-  opacity: 0.6;
-}
-
-/* ===========================
-   CTA
-=========================== */
 
 .navbar-cta {
   display: none;
   text-decoration: none;
-  color: #ffffff;
+  color: #ffffff !important;
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 500;
@@ -72,17 +61,53 @@
   border: 1px solid rgba(250, 248, 244, 0.6);
   padding: 0.5rem 1.2rem;
   border-radius: 2rem;
-  transition: var(--transition);
+  transition: all 0.3s ease;
 }
 
-.navbar-cta:hover {
+.navbar-hamburguer span {
+  display: block;
+  width: 24px;
+  height: 2px;
   background: #ffffff;
-  color: var(--color-text);
-  border-color: #ffffff;
+  transition: var(--transition);
+  transform-origin: center;
 }
 
 /* ===========================
-   HAMBURGUER
+    LÓGICA DE TEMA DARK-THEME 
+    (Ativado quando fundo é CLARO)
+=========================== */
+
+.navbar.dark-theme {
+  background: rgba(255, 255, 255, 0.95); /* Opcional: fundo leve no scroll */
+  backdrop-filter: blur(10px);
+}
+
+.navbar.dark-theme .navbar-logo img {
+  filter: brightness(1) invert(0); /* Logo Original/Preta */
+}
+
+.navbar.dark-theme .navbar-menu ul li a,
+.navbar.dark-theme .nav-links {
+  color: #000000 !important;
+}
+
+.navbar.dark-theme .navbar-cta {
+  color: #000000 !important;
+  border-color: #000000;
+}
+
+.navbar.dark-theme .navbar-hamburguer span {
+  background: #000000;
+}
+
+.navbar.dark-theme .navbar-cta:hover {
+  background: #000000;
+  color: #ffffff !important;
+}
+
+/* ===========================
+    HAMBURGUER ATIVO & MOBILE MENU
 =========================== */
 
 .navbar-hamburguer {
@@ -97,15 +122,6 @@
   z-index: 200;
 }
 
-.navbar-hamburguer span {
-  display: block;
-  width: 24px;
-  height: 2px;
-  background: #ffffff;
-  transition: var(--transition);
-  transform-origin: center;
-}
-
 .navbar-hamburguer.ativo span:nth-child(1) {
   transform: translateY(7px) rotate(45deg);
 }
@@ -117,10 +133,6 @@
 .navbar-hamburguer.ativo span:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
 }
-
-/* ===========================
-   MENU MOBILE FULLSCREEN
-=========================== */
 
 .navbar-mobile {
   position: fixed;
@@ -161,126 +173,31 @@
   transition: var(--transition);
 }
 
-.navbar-mobile ul li a:hover {
-  color: var(--color-accent);
-  opacity: 1;
-}
-
 /* ===========================
-   NAVBAR SEÇÃO CLARA
-=========================== */
-
-.navbar.clara .navbar-menu ul li a {
-  color: var(--color-text);
-}
-
-.navbar.clara .navbar-cta {
-  color: var(--color-text);
-  border-color: var(--color-border);
-}
-
-.navbar.clara .navbar-cta:hover {
-  background: var(--color-text);
-  color: var(--color-bg);
-}
-
-.navbar.clara .navbar-logo img {
-  filter: invert(0);
-}
-
-.navbar.clara .navbar-hamburguer span {
-  background: var(--color-text);
-}
-
-/* ===========================
-   TABLET — 768px
+    RESPONSIVIDADE (Media Queries)
 =========================== */
 
 @media (min-width: 768px) {
-
-  .navbar {
-    padding: var(--spacing-sm) var(--spacing-lg);
-  }
-
-  .navbar-logo img {
-    height: 65px;
-  }
-
-  .navbar-menu {
-    display: block;
-  }
-
-  .navbar-menu ul {
-    gap: var(--spacing-sm);
-  }
-
-  .navbar-menu ul li a {
-    font-size: 0.75rem;
-  }
-
-  .navbar-cta {
-    display: inline-block;
-    font-size: 0.75rem;
-    padding: 0.4rem 1rem;
-  }
-
-  .navbar-hamburguer {
-    display: none;
-  }
+  .navbar { padding: var(--spacing-sm) var(--spacing-lg); }
+  .navbar-logo img { height: 65px; }
+  .navbar-menu { display: block; }
+  .navbar-menu ul { gap: var(--spacing-sm); }
+  .navbar-menu ul li a { font-size: 0.75rem; }
+  .navbar-cta { display: inline-block; font-size: 0.75rem; padding: 0.4rem 1rem; }
+  .navbar-hamburguer { display: none; }
 }
-
-/* ===========================
-   DESKTOP — 1024px
-=========================== */
 
 @media (min-width: 1024px) {
-
-  .navbar {
-    padding: var(--spacing-sm) var(--spacing-xl);
-  }
-
-  .navbar-logo img {
-    height: 75px;
-  }
-
-  .navbar-menu ul {
-    gap: var(--spacing-md);
-  }
-
-  .navbar-menu ul li a {
-    font-size: var(--text-sm);
-  }
-
-  .navbar-cta {
-    font-size: var(--text-sm);
-    padding: 0.5rem 1.5rem;
-  }
+  .navbar { padding: var(--spacing-sm) var(--spacing-xl); }
+  .navbar-logo img { height: 75px; }
+  .navbar-menu ul { gap: var(--spacing-md); }
+  .navbar-menu ul li a { font-size: var(--text-sm); }
+  .navbar-cta { font-size: var(--text-sm); padding: 0.5rem 1.5rem; }
 }
 
-/* ===========================
-   LARGE DESKTOP — 1440px
-=========================== */
-
 @media (min-width: 1440px) {
-
-  .navbar {
-    padding: var(--spacing-sm) var(--spacing-xl);
-  }
-
-  .navbar-logo img {
-    height: 85px;
-  }
-
-  .navbar-menu ul {
-    gap: var(--spacing-lg);
-  }
-
-  .navbar-menu ul li a {
-    font-size: var(--text-md);
-  }
-
-  .navbar-cta {
-    font-size: var(--text-md);
-    padding: 0.6rem 1.8rem;
-  }
+  .navbar-logo img { height: 85px; }
+  .navbar-menu ul { gap: var(--spacing-lg); }
+  .navbar-menu ul li a { font-size: var(--text-md); }
+  .navbar-cta { font-size: var(--text-md); padding: 0.6rem 1.8rem; }
 }

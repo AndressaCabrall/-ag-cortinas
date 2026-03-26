@@ -1,4 +1,6 @@
+
 import './Projects.css'
+import { useSEO } from '../../hooks/useSEO' // ← ADICIONAR
 
 const projetos = [
   {
@@ -73,25 +75,23 @@ const projetos = [
   },
 ]
 
-
 function Projects() {
+  // ← ADICIONAR: SEO da página
+  useSEO({
+    title: 'Projetos — Ambientes Transformados',
+    description: 'Veja nossos projetos de cortinas, persianas e toldos sob medida. Cada ambiente recebe uma solução personalizada com elegância e sofisticação.',
+    url: '/projects',
+  })
 
   return (
     <main className="projects" aria-label="Projetos — AG Cortinas e Persianas">
 
-      {/* Header */}
-
       <div className="projects-header">
         <span className="projects-label">Projetos</span>
-        <h1 className="projects-titulo">
-          Ambientes transformados com elegância
-        </h1>
-        <p className="projects-subtitulo">
-          Cada projeto é único — feito sob medida para o seu espaço.
-        </p>
+        <h1 className="projects-titulo">Ambientes transformados com elegância</h1>
+        <p className="projects-subtitulo">Cada projeto é único — feito sob medida para o seu espaço.</p>
       </div>
 
-      {/* Grid 2 colunas */}
       <div className="projects-grid">
         {projetos.map(function(projeto) {
           return (

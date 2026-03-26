@@ -14,7 +14,7 @@ import Navbar from "./components/Navbar/Navbar.jsx"
 import Footer from "./components/Footer/Footer.jsx"
 import WhatsAppBtn from "./components/WhatsAppBtn/WhatsAppBtn.jsx"
 import CookieBanner from "./components/CookieBanner/CookieBanner.jsx"
-
+import Admin from "./pages/Admin/Admin.jsx"
 
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother)
@@ -71,6 +71,7 @@ function App() {
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/privacidade" element={<Privacy />} />
+            <Route path="/admin" element={<Admin />} /> 
           </Routes>
           <Footer />
         </div>
