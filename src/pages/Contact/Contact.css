@@ -1,14 +1,16 @@
 /* ===========================
    CONTACT — MOBILE FIRST
 =========================== */
-
+/* No seu Contact.css */
 .contact {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background: var(--color-bg);
-  position: relative;   /* ← fix footer reveal */
-  z-index: 10;          /* ← fix footer reveal */
+  background: var(--color-bg); 
+  position: relative;   
+  /* GARANTA ISSO: */
+  z-index: 10;         /* Fica por cima do footer */
+  margin-bottom: 0;    /* Evita frestas */
 }
 
 .contact-form-wrapper {
@@ -277,14 +279,12 @@
 
   .contact {
     flex-direction: row;
-    height: 100vh;
-    overflow: hidden;
+   
   }
 
   .contact-form-wrapper {
     width: 50%;
     padding: 6rem var(--spacing-xl) var(--spacing-md);
-    overflow-y: auto;
     justify-content: center;
   }
 

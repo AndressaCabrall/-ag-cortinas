@@ -6,8 +6,8 @@
   min-height: 100vh;
   background: var(--color-bg);
   padding-bottom: var(--spacing-xl);
-  position: relative;   /* ← fix footer reveal */
-  z-index: 10;          /* ← fix footer reveal */
+  position: relative;   
+  z-index: 10;          
 }
 
 /* Header */
@@ -35,12 +35,12 @@
   font-weight: 700;
   color: var(--color-text);
   line-height: 1.2;
-  max-width: 900px;
+  max-width: 800px;
 }
 
 .projects-subtitulo {
   font-family: var(--font-body);
-  font-size: var(--text-md);
+  font-size: var(--text-lg);
   font-weight: 400;
   color: var(--color-text-light);
   line-height: 1.6;

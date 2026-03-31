@@ -75,7 +75,7 @@
  
 .about-texto {
   font-family: var(--font-body);
-  font-size: var(--text-md);
+  font-size: var(--text-lg);
   font-weight: 400;
   color: var(--color-text-light);
   line-height: 1.8;

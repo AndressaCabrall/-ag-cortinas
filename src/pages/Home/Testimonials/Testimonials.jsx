@@ -62,6 +62,7 @@ function Testimonials() {
     <section className="testimonials" aria-label="Avaliações — AG Cortinas e Persianas">
 
       {/* Header */}
+      
       <div className="testimonials-header">
         <span className="testimonials-label">Avaliações</span>
         <h2 className="testimonials-titulo">

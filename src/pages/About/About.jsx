@@ -54,7 +54,7 @@ function About() {
       <div className="about-hero">
         <span className="about-label">Sobre nós</span>
         <h1 className="about-titulo">
-          Transformamos ambientes com elegância e sofisticação
+        Mais de uma década transformando janelas em experiências
         </h1>
       </div>
 

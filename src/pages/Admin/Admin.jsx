@@ -1,5 +1,6 @@
 // Painel protegido por senha para visualizar e gerenciar agendamentos
 
+
 import { useState, useEffect, useCallback } from 'react'
 import './Admin.css'
 
@@ -64,6 +65,22 @@ function Admin() {
       setErroSenha(true)
       setSenhaInput('')
     }
+  }
+
+  // Sair — limpa tudo antes de desautenticar
+  function handleSair(e) {
+    e.stopPropagation()
+    setAgendamentos([])
+    setErro(null)
+    setFiltro('todos')
+    setSenhaInput('')
+    setAutenticado(false)
+  }
+
+  // Atualizar
+  function handleAtualizar(e) {
+    e.stopPropagation()
+    carregarAgendamentos()
   }
 
   // Alterar status
@@ -131,7 +148,7 @@ function Admin() {
     <div className="admin">
 
       {/* Header */}
-      <header className="admin-header">
+      <div className="admin-header">
         <div className="admin-header-left">
           <span className="admin-header-icone">✦</span>
           <div>
@@ -140,14 +157,14 @@ function Admin() {
           </div>
         </div>
         <div className="admin-header-right">
-          <button className="admin-btn-refresh" onClick={carregarAgendamentos} disabled={loading}>
+          <button className="admin-btn-refresh" onClick={handleAtualizar} disabled={loading}>
             {loading ? 'Atualizando...' : '↻ Atualizar'}
           </button>
-          <button className="admin-btn-sair" onClick={() => setAutenticado(false)}>
+          <button className="admin-btn-sair" onClick={handleSair}>
             Sair
           </button>
         </div>
-      </header>
+      </div>
 
       {/* Contadores */}
       <div className="admin-contadores">

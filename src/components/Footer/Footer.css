@@ -4,14 +4,33 @@
 
 .footer {
   position: relative;
-  z-index: 1;
+  z-index: 1;         /* fica abaixo das seções anteriores */
   width: 100%;
   min-height: 100vh;
+  height: auto;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+/*
+  ─── CHAVE DO EFEITO "DESCOBERTO" ────────────────────────────────────────────
+  A seção imediatamente antes do footer precisa de z-index maior e
+  position: relative para ficar "em cima" do footer enquanto o scroll acontece.
+  Adicione essa classe à última seção antes do <Footer /> no seu layout:
+
+    <section className="section-before-footer"> ... </section>
+    <Footer />
+
+  Ou aplique diretamente via CSS global na última seção:
+
+    main > section:last-of-type {
+      position: relative;
+      z-index: 2;
+    }
+  ─────────────────────────────────────────────────────────────────────────────
+*/
 
 /* Imagem de fundo */
 .footer-bg {
@@ -19,8 +38,19 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  will-change: transform;
+  overflow: hidden;   /* corta o deslocamento do parallax da imagem */
+}
+
+.footer-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.70) 20%,
+    rgba(0, 0, 0, 0.25) 60%,
+    rgba(0, 0, 0, 0.10) 100%
+  );
 }
 
 .footer-bg picture {
@@ -35,24 +65,15 @@
   object-fit: cover;
   object-position: center;
   display: block;
-}
 
-.footer-bg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top,
-      rgba(0, 0, 0, 0.75) 10%,
-      /* mais escuro embaixo — texto */
-      rgba(0, 0, 0, 0.4) 50%,
-      /* meio */
-      rgba(0, 0, 0, 0.15) 100%
-      /* mais claro em cima */
-    );
+  /* Escala extra para não mostrar bordas brancas durante o parallax da imagem.
+     O GSAP anima yPercent via GPU automaticamente. */
+  transform: scale(1.2);
+  transform-origin: center center;
+  will-change: transform;
 }
 
 /* Conteúdo */
-
 .footer-content {
   position: relative;
   z-index: 2;
@@ -60,14 +81,12 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: var(--spacing-lg);
-  padding: var(--spacing-xl) var(--spacing-md);
+  gap: var(--spacing-md);
+  padding: var(--spacing-xl) var(--spacing-md) var(--spacing-xl);
   width: 100%;
-  will-change: transform;
 }
 
-/* Título grande */
-
+/* Título */
 .footer-titulo {
   font-family: var(--font-title);
   font-size: var(--text-2xl);
@@ -78,30 +97,15 @@
   text-align: center;
 }
 
-/* Linha divisória */
+.footer-topo {
+  margin-top: var(--spacing-sm);
+}
 
+/* Linha divisória */
 .footer-linha {
   width: 100%;
   border: none;
   border-top: 2px solid rgba(250, 248, 244, 0.2);
-}
-
-/* Bottom — logo redes institucional */
-
-.footer-bottom {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--spacing-lg);
-  width: 100%;
-  font-size: var(--text-md);
-}
-
-/* Logo */
-.footer-logo img {
-  height: 50px;
-  width: auto;
-  filter: invert(1);
 }
 
 /* Label h3 */
@@ -120,19 +124,76 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .footer-redes {
   display: flex;
   gap: var(--spacing-md);
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.footer-redes a {
+.footer-rede-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   color: var(--color-bg);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 400;
   transition: var(--transition);
 }
 
-.footer-redes a:hover {
+.footer-rede-item:hover {
+  color: var(--color-accent);
+}
+
+/* ── MOBILE: Contato + Institucional lado a lado ── */
+
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  width: 100%;
+}
+
+.footer-bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+  width: 100%;
+  text-align: left;
+}
+
+/* Contato */
+.footer-contato-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-contato {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.footer-contato-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: rgba(250, 248, 244, 0.7);
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  transition: var(--transition);
+  word-break: break-word;
+}
+
+.footer-contato-item:hover {
   color: var(--color-accent);
 }
 
@@ -140,7 +201,6 @@
 .footer-institucional {
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .footer-institucional ul {
@@ -170,64 +230,13 @@
   font-weight: 300;
   color: rgba(250, 248, 244, 0.4);
   letter-spacing: 0.05em;
-}
-
-/* Rede item — ícone + nome */
-.footer-rede-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--color-bg);
-  text-decoration: none;
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: 400;
-  transition: var(--transition);
-}
-
-.footer-rede-item:hover {
-  color: var(--color-accent);
-}
-
-/* Contato */
-.footer-contato-wrapper {
-  display: flex;
-  flex-direction: column;
-}
-
-.footer-contato {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-}
-
-.footer-contato-item {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: rgba(250, 248, 244, 0.7);
-  text-decoration: none;
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: 400;
-  transition: var(--transition);
-}
-
-.footer-contato-item:hover {
-  color: var(--color-accent);
-}
-
-/* Respiro entre navbar e título */
-.footer-topo {
-  margin-top: var(--spacing-xl);
+  text-align: center;
 }
 
 /* ===========================
-     TABLET — 768px
-  =========================== */
-
+   TABLET — 768px
+=========================== */
 @media (min-width: 768px) {
-
   .footer-titulo {
     font-size: var(--text-3xl);
   }
@@ -237,25 +246,24 @@
     justify-content: space-between;
     align-items: flex-start;
     text-align: left;
-
-
   }
 
-  .footer-redes-wrapper {
-    align-items: flex-start;
+  .footer-bottom-grid {
+    display: contents;
   }
 
+  .footer-redes-wrapper,
+  .footer-contato-wrapper,
   .footer-institucional {
     align-items: flex-start;
+    text-align: left;
   }
 }
 
 /* ===========================
-     DESKTOP — 1024px
-  =========================== */
-
+   DESKTOP — 1024px
+=========================== */
 @media (min-width: 1024px) {
-
   .footer-titulo {
     font-size: 5rem;
   }
@@ -266,20 +274,12 @@
 }
 
 /* ===========================
-     LARGE DESKTOP — 1440px
-  =========================== */
-
+   LARGE DESKTOP — 1440px
+=========================== */
 @media (min-width: 1440px) {
-
-  .footer-titulo {
-    font-size: 5rem;
-    
-  }
-
   .footer-content {
     padding: var(--spacing-xl) 12rem;
   }
-
 
   .footer-topo {
     margin-top: var(--spacing-xl);

@@ -10,7 +10,7 @@ function BlogPost() {
   const post = posts.find(function(p) { return p.slug === slug })
 
   // ← ADICIONAR: SEO dinâmico — usa dados do post atual
-  // Se o post não existe ainda, passa valores vazios (o hook lida com isso)
+  
   useSEO({
     title: post ? post.titulo : 'Post não encontrado',
     description: post ? post.resumo : '',

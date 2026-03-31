@@ -35,16 +35,16 @@
   font-weight: 700;
   color: var(--color-text);
   line-height: 1.2;
-  max-width: 600px;
+  max-width: 700px;
 }
 
 .blog-subtitulo {
   font-family: var(--font-body);
-  font-size: var(--text-md);
+  font-size: var(--text-lg);
   font-weight: 400;
   color: var(--color-text-light);
   line-height: 1.6;
-  max-width: 500px;
+  max-width: 800px;
 }
 
 /* Grid */

@@ -5,78 +5,79 @@ import { useSEO } from '../../hooks/useSEO' // ← ADICIONAR
 const projetos = [
   {
     id: 1,
-    imagem: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80',
-    categoria: 'Cortinas',
+    imagem: '/src/assets/images/projects/cortina-pedireito.webp',
+    categoria: 'Cortinas Wave com Pé direito duplo',
     titulo: 'Sala de estar elegante',
     descricao: 'Cortina sob medida em linho natural com trilho duplo embutido.'
   },
   {
     id: 2,
-    imagem: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80',
-    categoria: 'Persianas',
-    titulo: 'Quarto moderno',
-    descricao: 'Persiana rolo blackout com controle total de luminosidade.'
+    imagem: '/src/assets/images/projects/cortina-wave.webp',
+    categoria: 'Cortina Voal Liso',
+    titulo: 'Escritório Decorado',
+    descricao: 'Cortina voal liso no trilho, ambiente decorado e estiloso.'
   },
   {
     id: 3,
-    imagem: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80',
-    categoria: 'Cortinas',
-    titulo: 'Home office sofisticado',
-    descricao: 'Cortina screen que permite trabalhar sem reflexo na tela.'
+    imagem: '/src/assets/images/projects/cortina-pregaMacho.webp',
+    categoria: 'Cortina para trilho curvo',
+    titulo: 'Sala de Estar sofisticada',
+    descricao: 'Cortina Prega Macho em Linho forrada com microfibra para trilho curvo.'
   },
   {
     id: 4,
-    imagem: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=80',
-    categoria: 'Persianas',
-    titulo: 'Escritório corporativo',
-    descricao: 'Persiana vertical com controle de privacidade e luminosidade.'
+    imagem: '/src/assets/images/projects/cortina-screen.webp',
+    categoria: 'Persianas Rolo tela solar',
+    titulo: 'Sacada',
+    descricao: 'Persiana Rolo em tela solar 3% com controle de privacidade e luminosidade.'
   },
   {
     id: 5,
-    imagem: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&q=80',
-    categoria: 'Cortinas',
-    titulo: 'Quarto infantil',
-    descricao: 'Cortina blackout com voal — escuridão total para o sono das crianças.'
+    imagem: '/src/assets/images/projects/persiana-doublevision.webp',
+    categoria: 'Cortinas Double Vision',
+    titulo: 'Sala de Estar Moderna',
+    descricao: 'Cortina Double Vision  — Sofisticação e funcionalidade em um só produto. '
   },
   {
     id: 6,
-    imagem: 'https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=800&q=80',
-    categoria: 'Cortinas',
-    titulo: 'Sala de jantar',
-    descricao: 'Cortina de veludo sob medida com acabamento em ilhós dourados.'
+    imagem: '/src/assets/images/projects/persiana-vertical.webp',
+    categoria: 'Persianas Verticais Blackout e Translúcida',
+    titulo: 'Salas corporativas',
+    descricao: 'Clássica, funcional e perfeita para grandes vãos. '
   },
   {
     id: 7,
-    imagem: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=800&q=80',
-    categoria: 'Persianas',
-    titulo: 'Varanda gourmet',
-    descricao: 'Persiana de enrolar em PVC — resistente à umidade e ao sol.'
+    imagem:'/src/assets/images/projects/cortinadesala.webp',
+    categoria: 'Cortina Prega Macho',
+    titulo: 'Cortina Linho forrada',
+    descricao: 'Beleza por fora, proteção por dentro, bloqueio de luz, isolamento térmico e privacidade total.'
   },
   {
     id: 8,
-    imagem: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80',
-    categoria: 'Cortinas',
-    titulo: 'Suite master',
-    descricao: 'Cortina dupla — voal e blackout — em trilho embutido no gesso.'
+    imagem:'/src/assets/images/projects/motorizada.webp',
+    categoria: 'Cortinas Motorizadas',
+    titulo: 'Cortina Motorizada',
+    descricao: 'O conforto de controlar a luz e a privacidade do seu ambiente sem sair do lugar. '
   },
   {
     id: 9,
-    imagem: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&q=80',
+    imagem:'/src/assets/images/projects/toldo.webp',
     categoria: 'Toldos',
     titulo: 'Área externa',
-    descricao: 'Toldo retrátil com acionamento manual para área gourmet.'
+    descricao: 'Toldo rolo com acionamento manual para área gourmet.'
   },
   {
     id: 10,
-    imagem: 'https://images.unsplash.com/photo-1615873968403-89e068629265?w=800&q=80',
-    categoria: 'Persianas',
-    titulo: 'Sala moderna',
-    descricao: 'Persiana double vision — controle de luz com muito estilo.'
+    imagem:'/src/assets/images/projects/ph50mm.webp',
+    categoria: 'Persiana Horizontal',
+    titulo: 'Sala de Jantar',
+    descricao: 'Persiana horizontal 50mm em madeira com fita para sala de jantar.'
   },
 ]
 
 function Projects() {
   // ← ADICIONAR: SEO da página
+
   useSEO({
     title: 'Projetos — Ambientes Transformados',
     description: 'Veja nossos projetos de cortinas, persianas e toldos sob medida. Cada ambiente recebe uma solução personalizada com elegância e sofisticação.',
@@ -88,12 +89,14 @@ function Projects() {
 
       <div className="projects-header">
         <span className="projects-label">Projetos</span>
-        <h1 className="projects-titulo">Ambientes transformados com elegância</h1>
-        <p className="projects-subtitulo">Cada projeto é único — feito sob medida para o seu espaço.</p>
+        <h1 className="projects-titulo">Projetos realizados com precisão e estilo</h1>
+        <p className="projects-subtitulo">Do projeto à instalação, cada cortina e persiana é executada sob medida — para o seu espaço, do seu jeito.
+
+        </p>
       </div>
 
       <div className="projects-grid">
-        {projetos.map(function(projeto) {
+        {projetos.map(function (projeto) {
           return (
             <div
               key={projeto.id}

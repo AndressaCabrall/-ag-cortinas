@@ -88,3 +88,9 @@ h1, h2, h3 {
   overflow: visible;
   width: 100%;
 }
+
+/* Garante que o <main> de cada página fique sobre o footer (efeito revelado) */
+main {
+  position: relative;
+  z-index: 2;
+}

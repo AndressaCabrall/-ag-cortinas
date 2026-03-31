@@ -1,83 +1,50 @@
+
+import { useEffect, useState } from 'react'
 import './Preloader.css'
-import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import mascaraSvg from '../../../assets/images/icons/preloader-texto.svg'
-import heroDesktop from '../../../assets/images/hero-footer/hero-desktop.webp'
 
-gsap.registerPlugin(ScrollTrigger)
+function Preloader({ onComplete }) {
+  const [porcentagem, setPorcentagem] = useState(0)
+  const [saindo, setSaindo] = useState(false)
 
-function Preloader(props) {
+  useEffect(() => {
+    let atual = 0
 
-  const preloaderRef = useRef(null)
-  const maskRef = useRef(null)
-  const setaRef = useRef(null)
+    const intervalo = setInterval(() => {
+      // Velocidade variável — começa rápido, desacelera no final
+      const incremento = atual < 70 ? Math.random() * 8 + 4
+                       : atual < 90 ? Math.random() * 3 + 1
+                       : 1
 
-  useEffect(function() {
+      atual = Math.min(atual + incremento, 100)
+      setPorcentagem(Math.floor(atual))
 
-    const preloader = preloaderRef.current
-    const mask = maskRef.current
-    const seta = setaRef.current
-
-    // Seta pulsando para chamar atenção
-    gsap.to(seta, {
-      y: 10,
-      duration: 1,
-      repeat: -1,
-      yoyo: true,
-      ease: 'power1.inOut'
-    })
-
-    // Máscara cresce com scroll
-    gsap.to(mask, {
-      scale: 15,
-      scrollTrigger: {
-        trigger: document.body,
-        start: 'top top',
-        end: '+=800',
-        scrub: 1,
-        pin: true,
+      if (atual >= 100) {
+        clearInterval(intervalo)
+        setTimeout(() => {
+          setSaindo(true)
+          setTimeout(() => onComplete(), 600) // aguarda animação de saída
+        }, 300)
       }
-    })
+    }, 60)
 
-    // Preloader some com scroll
-    gsap.to(preloader, {
-      opacity: 0,
-      scrollTrigger: {
-        trigger: document.body,
-        start: 'top top',
-        end: '+=800',
-        scrub: 1,
-      }
-    })
-
-  }, [])
-
-  const estiloMask = {
-    maskImage: 'url(' + mascaraSvg + ')',
-    maskSize: '90% auto',
-    maskRepeat: 'no-repeat',
-    maskPosition: 'center',
-    WebkitMaskImage: 'url(' + mascaraSvg + ')',
-    WebkitMaskSize: '90% auto',
-    WebkitMaskRepeat: 'no-repeat',
-    WebkitMaskPosition: 'center',
-    backgroundImage: 'url(' + props.imagemFundo + ')',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  }
+    return () => clearInterval(intervalo)
+  }, [onComplete])
 
   return (
-    <div className="preloader" ref={preloaderRef}>
-      <div className="mask" ref={maskRef} style={estiloMask}></div>
+    <div className={`preloader ${saindo ? 'saindo' : ''}`}>
+      <div className="preloader-conteudo">
 
-      {/* Seta de scroll */}
-      <div className="preloader-seta" ref={setaRef}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <line x1="12" y1="5" x2="12" y2="19"></line>
-          <polyline points="19 12 12 19 5 12"></polyline>
-        </svg>
-        <span>scroll</span>
+        <p className="preloader-marca">AG Cortinas</p>
+
+        <div className="preloader-barra-wrapper">
+          <div
+            className="preloader-barra"
+            style={{ width: `${porcentagem}%` }}
+          />
+        </div>
+
+        <span className="preloader-numero">{porcentagem}%</span>
+
       </div>
     </div>
   )

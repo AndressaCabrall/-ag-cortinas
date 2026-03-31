@@ -6,7 +6,7 @@ export const posts = [
     categoria: 'Cortinas',
     data: '15 de março de 2026',
     resumo: 'Escolher a cortina certa faz toda a diferença na decoração. Descubra como selecionar o modelo ideal para cada cômodo.',
-    imagem: 'https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&q=80',
+    imagem: '/src/assets/images/blog/cortina-card.webp',
     conteudo: [
       {
         tipo: 'paragrafo',
@@ -57,7 +57,7 @@ export const posts = [
     categoria: 'Persianas',
     data: '10 de março de 2026',
     resumo: 'Persiana horizontal, vertical, rolo ou double vision? Entenda as diferenças e escolha a melhor opção.',
-    imagem: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80',
+    imagem: '/src/assets/images/blog/persiana-card.webp',
     conteudo: [
       {
         tipo: 'paragrafo',
@@ -108,7 +108,7 @@ export const posts = [
     categoria: 'Cortinas',
     data: '05 de março de 2026',
     resumo: 'O trilho certo faz toda a diferença na instalação e no visual da cortina. Conheça os principais tipos.',
-    imagem: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80',
+    imagem: '/src/assets/images/blog/trilhos.webp',
     conteudo: [
       {
         tipo: 'paragrafo',
@@ -159,7 +159,7 @@ export const posts = [
     categoria: 'Cortinas',
     data: '01 de março de 2026',
     resumo: 'A cortina blackout bloqueia a entrada de luz e ainda oferece isolamento térmico e acústico.',
-    imagem: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&q=80',
+    imagem: '/src/assets/images/blog/blackout.webp',
     conteudo: [
       {
         tipo: 'paragrafo',

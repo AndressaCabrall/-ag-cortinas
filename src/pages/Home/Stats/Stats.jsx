@@ -67,7 +67,7 @@ function Stats() {
         {/* Texto + CTA */}
         <div className="stats-texto">
           <h2 className="stats-titulo">
-            Transformando ambientes com elegância há mais de 13 anos
+          Cortinas e persianas feitas para quem valoriza o detalhe
           </h2>
           <p className="stats-subtitulo">
             Cada projeto é tratado com carinho e profissionalismo — como se fosse para o nosso próprio lar.

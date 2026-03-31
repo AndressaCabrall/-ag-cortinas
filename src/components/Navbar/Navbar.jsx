@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
@@ -15,32 +16,21 @@ function Navbar() {
   useEffect(() => {
     const navbar = navbarRef.current;
 
-    // 1. Limpeza de gatilhos ao trocar de rota
+    // Limpa gatilhos anteriores e reseta para transparente
     ScrollTrigger.getAll().forEach(t => t.kill());
-    navbar.classList.remove('dark-theme'); // Reset padrão
+    navbar.classList.remove('dark-theme');
 
-    // 2. Lógica para Páginas Internas
-    // Se não for a Home, a maioria das páginas é clara (texto preto)
-    const PAGINAS_CLARAS = ['/contact', '/about', '/blog', '/projects', '/privacidade'];
-    const ehPaginaClara = PAGINAS_CLARAS.includes(location.pathname) || location.pathname.startsWith('/blog/');
-
-    if (location.pathname !== '/') {
-      if (ehPaginaClara) navbar.classList.add('dark-theme');
-      return;
-    }
-
-    // 3. Lógica para a Home (ScrollTrigger Automático)
-    // Ele vai procurar por qualquer seção que tenha [data-theme="light-bg"]
+    // Detecta seções claras em QUALQUER página via [data-theme="light-bg"]
     const secoesClaras = document.querySelectorAll('[data-theme="light-bg"]');
 
     secoesClaras.forEach(secao => {
       ScrollTrigger.create({
         trigger: secao,
-        start: "top 80px", // Detecta quando a seção chega na navbar
-        end: "bottom 80px",
-        onEnter: () => navbar.classList.add('dark-theme'),
+        start: 'top 80px',
+        end: 'bottom 80px',
+        onEnter:     () => navbar.classList.add('dark-theme'),
         onEnterBack: () => navbar.classList.add('dark-theme'),
-        onLeave: () => navbar.classList.remove('dark-theme'),
+        onLeave:     () => navbar.classList.remove('dark-theme'),
         onLeaveBack: () => navbar.classList.remove('dark-theme'),
       });
     });

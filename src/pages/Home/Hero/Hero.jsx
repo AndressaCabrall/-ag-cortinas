@@ -165,7 +165,7 @@ function Hero() {
             src={heroDesktop}
             alt="Cortina de linho sob medida instalada em sala de estar moderna"
             className="hero-img"
-            fetchpriority="high"
+            fetchPriority="high"
           />
         </picture>
       </div>
