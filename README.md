@@ -1,16 +1,40 @@
-# React + Vite
+# AG Cortinas & Persianas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação Full Stack moderna desenvolvida para substituir um sistema legado e ineficiente por uma solução focada em **conversão, performance e experiência do usuário**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🎯 O Desafio & A Solução
+A **AG Cortinas e Persianas** (Joinville/SC) operava com um site WordPress sem manutenção, o que resultava em perda de leads e falta de autoridade digital.
 
-## React Compiler
+Este projeto resolveu esses problemas através de:
+* **Captação Ativa:** Sistema de agendamento de visita técnica integrado ao banco de dados e e-mail.
+* **Autoridade de Marca:** Portfólio digital moderno com animações fluidas e design minimalista.
+* **Autonomia:** Painel administrativo customizado para gestão de pedidos sem dependência técnica.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologias Utilizadas
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+| Camada | Stack |
+| :--- | :--- |
+| **Frontend** | React 19, React Router, GSAP (ScrollSmoother & ScrollTrigger) |
+| **Backend** | PHP, Composer, PHPMailer (SMTP) |
+| **Banco de Dados** | MySQL |
+| **Design / SEO** | CSS3 Custom Properties, Hook `useSEO` (Meta Tags Dinâmicas), Design Responsivo |
+
+---
+
+## ✨ Destaques do Projeto
+
+* **Interface Inteligente:** Navbar com detecção automática de contraste (adapta cores baseadas no fundo da página).
+* **Performance & Animações:** Uso de GSAP para efeitos parallax e scroll suave, mantendo alta taxa de quadros.
+* **Foco em SEO:** Implementação de URLs amigáveis, atributos ARIA e tags Open Graph para compartilhamento em redes sociais.
+* **LGPD Ready:** Sistema de consentimento de cookies e política de privacidade integrada.
+* **Gestão de Leads:** Dashboard administrativo com filtros de status (pendente, confirmado, cancelado) e atualização em tempo real.
+
+---
+
+## 🚀 Como Executar o Projeto
+
+Este é um projeto Full Stack que requer um ambiente com suporte a PHP e MySQL (como XAMPP, Laragon ou Servidor Apache).
