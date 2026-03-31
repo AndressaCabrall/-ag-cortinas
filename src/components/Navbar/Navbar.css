@@ -1,5 +1,5 @@
 /* ===========================
-    NAVBAR — MOBILE FIRST
+   NAVBAR — MOBILE FIRST
 =========================== */
 
 .navbar {
@@ -13,18 +13,19 @@
   justify-content: space-between;
   padding: var(--spacing-sm) var(--spacing-md);
   background: transparent;
-  transition: all 0.4s ease; /* Transição suave para troca de temas */
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 /* ===========================
-    LOGO & ELEMENTOS PADRÃO (Para fundos Escuros)
+   PADRÃO: fundo ESCURO → elementos BRANCOS
+   (hero com imagem, footer com imagem)
 =========================== */
 
 .navbar-logo img {
   height: 55px;
   width: auto;
   display: block;
-  filter: brightness(0) invert(1); /* Logo Branca */
+  filter: brightness(0) invert(1);
   transition: filter 0.3s ease;
 }
 
@@ -38,9 +39,10 @@
   gap: var(--spacing-md);
 }
 
-.navbar-menu ul li a, .nav-links {
+.navbar-menu ul li a,
+.nav-links {
   text-decoration: none;
-  color: #ffffff !important; 
+  color: #ffffff !important;
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 500;
@@ -64,6 +66,11 @@
   transition: all 0.3s ease;
 }
 
+.navbar-cta:hover {
+  background: #ffffff;
+  color: #000000 !important;
+}
+
 .navbar-hamburguer span {
   display: block;
   width: 24px;
@@ -74,17 +81,12 @@
 }
 
 /* ===========================
-    LÓGICA DE TEMA DARK-THEME 
-    (Ativado quando fundo é CLARO)
+   DARK-THEME: fundo CLARO → elementos PRETOS
+   (about, contact, blog, seções claras da home)
 =========================== */
 
-.navbar.dark-theme {
-  background: rgba(255, 255, 255, 0.95); /* Opcional: fundo leve no scroll */
-  backdrop-filter: blur(10px);
-}
-
 .navbar.dark-theme .navbar-logo img {
-  filter: brightness(1) invert(0); /* Logo Original/Preta */
+  filter: brightness(1) invert(0);
 }
 
 .navbar.dark-theme .navbar-menu ul li a,
@@ -94,11 +96,7 @@
 
 .navbar.dark-theme .navbar-cta {
   color: #000000 !important;
-  border-color: #000000;
-}
-
-.navbar.dark-theme .navbar-hamburguer span {
-  background: #000000;
+  border-color: rgba(44, 40, 38, 0.6);
 }
 
 .navbar.dark-theme .navbar-cta:hover {
@@ -106,8 +104,12 @@
   color: #ffffff !important;
 }
 
+.navbar.dark-theme .navbar-hamburguer span {
+  background: #000000;
+}
+
 /* ===========================
-    HAMBURGUER ATIVO & MOBILE MENU
+   HAMBURGUER
 =========================== */
 
 .navbar-hamburguer {
@@ -133,6 +135,10 @@
 .navbar-hamburguer.ativo span:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
 }
+
+/* ===========================
+   MENU MOBILE
+=========================== */
 
 .navbar-mobile {
   position: fixed;
@@ -174,7 +180,7 @@
 }
 
 /* ===========================
-    RESPONSIVIDADE (Media Queries)
+   RESPONSIVIDADE
 =========================== */
 
 @media (min-width: 768px) {

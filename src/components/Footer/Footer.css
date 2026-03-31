@@ -4,7 +4,7 @@
 
 .footer {
   position: relative;
-  z-index: 1;         /* fica abaixo das seções anteriores */
+  z-index: 1;         
   width: 100%;
   min-height: 100vh;
   height: auto;
@@ -14,42 +14,25 @@
   justify-content: center;
 }
 
-/*
-  ─── CHAVE DO EFEITO "DESCOBERTO" ────────────────────────────────────────────
-  A seção imediatamente antes do footer precisa de z-index maior e
-  position: relative para ficar "em cima" do footer enquanto o scroll acontece.
-  Adicione essa classe à última seção antes do <Footer /> no seu layout:
-
-    <section className="section-before-footer"> ... </section>
-    <Footer />
-
-  Ou aplique diretamente via CSS global na última seção:
-
-    main > section:last-of-type {
-      position: relative;
-      z-index: 2;
-    }
-  ─────────────────────────────────────────────────────────────────────────────
-*/
-
 /* Imagem de fundo */
 .footer-bg {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;   /* corta o deslocamento do parallax da imagem */
+  overflow: hidden;   
 }
 
-.footer-overlay {
+.footer-bg::after {
+  content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
   background: linear-gradient(
     to top,
-    rgba(0, 0, 0, 0.70) 20%,
-    rgba(0, 0, 0, 0.25) 60%,
-    rgba(0, 0, 0, 0.10) 100%
+    rgba(0, 0, 0, 0.75) 20%,
+    rgba(0, 0, 0, 0.35) 60%,
+    rgba(0, 0, 0, 0.15) 100%
   );
 }
 
@@ -66,8 +49,6 @@
   object-position: center;
   display: block;
 
-  /* Escala extra para não mostrar bordas brancas durante o parallax da imagem.
-     O GSAP anima yPercent via GPU automaticamente. */
   transform: scale(1.2);
   transform-origin: center center;
   will-change: transform;

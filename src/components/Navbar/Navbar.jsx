@@ -1,41 +1,77 @@
-
 import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import logo from '../../assets/images/icons/logo.svg';
 import './Navbar.css';
 
-gsap.registerPlugin(ScrollTrigger);
+// Páginas que têm fundo claro do início ao fim (navbar sempre escura)
+const PAGINAS_CLARAS = ['/about', '/contact', '/blog', '/projects', '/privacidade'];
+
+// Seções com fundo claro na Home (IDs dos elementos)
+// Adicione aqui os IDs das seções claras da Home conforme for criando
+const SECOES_CLARAS_HOME = [
+  'home-produtos',
+  'home-sobre',
+  'home-depoimentos',
+  'home-diferenciais',
+];
 
 function Navbar() {
   const navbarRef = useRef(null);
   const location = useLocation();
   const [menuAberto, setMenuAberto] = useState(false);
+  const [temaDark, setTemaDark] = useState(false);
 
   useEffect(() => {
-    const navbar = navbarRef.current;
+    const pathname = location.pathname;
 
-    // Limpa gatilhos anteriores e reseta para transparente
-    ScrollTrigger.getAll().forEach(t => t.kill());
-    navbar.classList.remove('dark-theme');
+    // Página inteiramente clara → navbar escura imediatamente, sem scroll listener
+    const isPaginaClara = PAGINAS_CLARAS.includes(pathname) ||
+      pathname.startsWith('/blog/');
 
-    // Detecta seções claras em QUALQUER página via [data-theme="light-bg"]
-    const secoesClaras = document.querySelectorAll('[data-theme="light-bg"]');
+    if (isPaginaClara) {
+      setTemaDark(true);
+      return;
+    }
 
-    secoesClaras.forEach(secao => {
-      ScrollTrigger.create({
-        trigger: secao,
-        start: 'top 80px',
-        end: 'bottom 80px',
-        onEnter:     () => navbar.classList.add('dark-theme'),
-        onEnterBack: () => navbar.classList.add('dark-theme'),
-        onLeave:     () => navbar.classList.remove('dark-theme'),
-        onLeaveBack: () => navbar.classList.remove('dark-theme'),
+    // Home e outras páginas com hero escuro → começa clara
+    setTemaDark(false);
+
+    const handleScroll = () => {
+      // Footer sempre escuro (imagem) → navbar branca
+      const footer = document.querySelector('.footer');
+      if (footer) {
+        const rect = footer.getBoundingClientRect();
+        if (rect.top <= 80 && rect.bottom >= 80) {
+          setTemaDark(false);
+          return;
+        }
+      }
+
+      // Verifica seções claras da Home por ID
+      let sobreSecaoClara = false;
+      SECOES_CLARAS_HOME.forEach(id => {
+        const secao = document.getElementById(id);
+        if (secao) {
+          const rect = secao.getBoundingClientRect();
+          if (rect.top <= 80 && rect.bottom >= 80) {
+            sobreSecaoClara = true;
+          }
+        }
       });
-    });
 
-    return () => ScrollTrigger.getAll().forEach(t => t.kill());
+      setTemaDark(sobreSecaoClara);
+    };
+
+    // Escuta o smooth-content (ScrollSmoother) ou window como fallback
+    const smoothContent = document.getElementById('smooth-content');
+    const scroller = smoothContent || window;
+
+    scroller.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // checa posição inicial
+
+    return () => {
+      scroller.removeEventListener('scroll', handleScroll);
+    };
   }, [location.pathname]);
 
   // Fecha menu ao trocar de rota
@@ -44,7 +80,11 @@ function Navbar() {
   }, [location.pathname]);
 
   return (
-    <header className="navbar" ref={navbarRef} role="banner">
+    <header
+      className={`navbar ${temaDark ? 'dark-theme' : ''}`}
+      ref={navbarRef}
+      role="banner"
+    >
       <Link to="/" className="navbar-logo" aria-label="Ir para página inicial">
         <img src={logo} alt="AG Cortinas e Persianas — Logo" />
       </Link>

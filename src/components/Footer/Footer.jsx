@@ -1,74 +1,32 @@
-import { Link, useLocation } from 'react-router-dom'
 import { useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import { Link, useLocation } from 'react-router-dom'
 import footerMobile from '../../assets/images/hero-footer/footer-mobile.webp'
 import footerDesktop from '../../assets/images/hero-footer/footer-desktop.webp'
 import './Footer.css'
 
-// Registra os plugins uma única vez no módulo (fora do componente)
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
 function Footer() {
   const footerRef = useRef(null)
-  const imgRef = useRef(null)
-
-  // Detecta mudança de rota para forçar recálculo das alturas
   const location = useLocation()
 
-  /**
-   * useGSAP — substituto oficial do useEffect para GSAP no React.
-   *
-   * Por que useGSAP em vez de useEffect?
-   * - Internamente usa useLayoutEffect, que roda ANTES da pintura do browser.
-   *   Isso garante que o ScrollTrigger calcule as alturas corretas do DOM.
-   * - Cleanup automático via gsap.context(): ao trocar de rota, todos os
-   *   ScrollTriggers são destruídos e recriados com as alturas corretas.
-   *
-   * Por que [location.pathname] na dependência?
-   * - Toda vez que o React Router muda de página, o hook re-executa.
-   * - O revertOnUpdate: true garante que os ScrollTriggers antigos sejam
-   *   destruídos antes de criar os novos com as alturas atualizadas.
-   */
   useGSAP(
     () => {
       const footer = footerRef.current
-      const img = imgRef.current
-      if (!footer || !img) return
+      if (!footer) return
 
-      // EFEITO 1 — Footer descoberto pela página
-      // immediateRender: false → não aplica yPercent:-30 antes do ScrollTrigger estar pronto
-      // invalidateOnRefresh: true → recalcula posições quando ScrollTrigger.refresh() for chamado
       gsap.from(footer, {
         yPercent: -30,
         ease: 'none',
-        immediateRender: false,
         scrollTrigger: {
           trigger: footer,
-          start: 'top bottom',
-          end: 'top top',
           scrub: true,
-          invalidateOnRefresh: true,
+          end: '100% 100%',
         },
       })
-
-      // EFEITO 2 — Parallax reverso da imagem de fundo
-      gsap.fromTo(
-        img,
-        { yPercent: 10 },
-        {
-          yPercent: -10,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: footer,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: true,
-            invalidateOnRefresh: true,
-          },
-        }
-      )
     },
     {
       scope: footerRef,
@@ -79,27 +37,24 @@ function Footer() {
 
   return (
     <footer
-      ref={footerRef}
       className="footer"
+      ref={footerRef}
       role="contentinfo"
       aria-label="Rodapé — AG Cortinas e Persianas"
     >
 
-      {/* Imagem de fundo */}
+      {/* Imagem de fundo — parallax delegado ao ScrollSmoother via data-speed */}
       <div className="footer-bg">
-        <div className="footer-overlay"></div>
-        <picture>
+        <picture data-speed="0.6">
           <source
             media="(max-width: 600px)"
             srcSet={footerMobile}
             type="image/webp"
           />
           <img
-            ref={imgRef}
             src={footerDesktop}
             alt="Cortinas e persianas sob medida — AG Cortinas Joinville"
             className="footer-img"
-            fetchPriority="high"
           />
         </picture>
       </div>
