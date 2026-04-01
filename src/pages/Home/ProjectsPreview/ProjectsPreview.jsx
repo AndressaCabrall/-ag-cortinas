@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom'
 import './ProjectsPreview.css'
 
-import cortinaPregaMacho from '../../assets/images/projects-preview/cortinaPregaMacho.webp'
-import salaEstar from '../../assets/images/projects-preview/salaEstar.webp'
-import persianaRolo from '../../assets/images/projects-preview/persiana-rolo.webp'
-import cortinaWave from '../../assets/images/projects-preview/cortinaWave.webp'
-import cortinaPregas from '../../assets/images/projects-preview/cortina-pregas.webp'
-import persianaBlackout from '../../assets/images/projects-preview/persiana-blackout.webp'
-import persianaDoubleVision from '../../assets/images/projects-preview/persiana-doubleVision.webp'
+import cortinaPregaMacho from '../../../assets/images/projects-preview/cortinaPregaMacho.webp'
+import salaEstar from '../../../assets/images/projects-preview/salaEstar.webp'
+import persianaRolo from '../../../assets/images/projects-preview/persiana-rolo.webp'
+import cortinaWave from '../../../assets/images/projects-preview/cortinaWave.webp'
+import cortinaPregas from '../../../assets/images/projects-preview/cortina-pregas.webp'
+import persianaBlackout from '../../../assets/images/projects-preview/persiana-blackout.webp'
+import persianaDoubleVision from '../../../assets/images/projects-preview/persiana-doublevision.webp'
 
 const projetosPreview = [
   {
