@@ -12,6 +12,8 @@ Este projeto resolveu esses problemas através de:
 * **Autoridade de Marca:** Portfólio digital moderno com animações fluidas e design minimalista.
 * **Autonomia:** Painel administrativo customizado para gestão de pedidos sem dependência técnica.
 
+* Link do Projeto: https://agcortinas.andressacabraltech.com.br/
+
 ---
 
 ## 🛠️ Tecnologias Utilizadas
