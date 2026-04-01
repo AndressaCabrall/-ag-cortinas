@@ -72,16 +72,26 @@ function AppInner({ smootherRef, carregado, setCarregado }) {
     smootherRef.current.scrollTo(0, false)
 
     // Refresh após o React terminar de pintar o novo layout
+    // Home tem mais conteúdo — precisa de mais tempo para calcular
+    const tempo = location.pathname === '/' ? 1200 : 200
     const id = setTimeout(() => {
       ScrollTrigger.refresh()
-    }, 200)
+    }, tempo)
 
     return () => clearTimeout(id)
   }, { dependencies: [location.pathname] })
 
   return (
     <>
-      {!carregado && <Preloader onComplete={() => setCarregado(true)} />}
+      {!carregado && <Preloader onComplete={() => {
+        setCarregado(true)
+        setTimeout(() => {
+          ScrollTrigger.refresh()
+          if (smootherRef.current) {
+            smootherRef.current.scrollTo(0, false)
+          }
+        }, 300)
+      }} />}
 
       <Navbar />
       <WhatsAppBtn />
@@ -90,14 +100,14 @@ function AppInner({ smootherRef, carregado, setCarregado }) {
       <div ref={wrapperRef} id="smooth-wrapper">
         <div ref={contentRef} id="smooth-content">
           <Routes>
-            <Route path="/"             element={<Home />} />
-            <Route path="/projects"     element={<Projects />} />
-            <Route path="/about"        element={<About />} />
-            <Route path="/blog"         element={<Blog />} />
-            <Route path="/blog/:slug"   element={<BlogPost />} />
-            <Route path="/contact"      element={<Contact />} />
-            <Route path="/privacidade"  element={<Privacy />} />
-            <Route path="/admin"        element={<Admin />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/privacidade" element={<Privacy />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
           <Footer />
         </div>
@@ -107,6 +117,7 @@ function AppInner({ smootherRef, carregado, setCarregado }) {
 }
 
 // ─── Componente raiz: só provê BrowserRouter, Context e estado global ───
+
 function App() {
   const smootherRef = useRef(null)
   const [carregado, setCarregado] = useState(false)
