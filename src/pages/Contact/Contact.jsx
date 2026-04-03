@@ -61,12 +61,16 @@ function Contact() {
     e.preventDefault()
     setAgendaStatus('loading')
     try {
-      const res = await fetch(`${API_BASE}/agendamento.php`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(agendaForm)
-      })
-      const data = await res.json()
+
+     const res = await fetch(`${API_BASE}/contato.php`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(contatoForm)
+})
+const text = await res.text()
+console.log('Resposta bruta:', text)
+const data = JSON.parse(text)
+
       if (data.success) {
         setAgendaStatus('success')
         setAgendaForm({
