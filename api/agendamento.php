@@ -75,7 +75,7 @@ $servicoMap = [
     'outro'     => 'Outro',
     ''          => 'Não informado',
 ];
-$servicoLabel = $servicoMap[$servico] ?? 'Não informado';
+$servicoLabel  = $servicoMap[$servico] ?? 'Não informado';
 $dataFormatada = date('d/m/Y', strtotime($data_visita));
 
 try {
@@ -108,8 +108,9 @@ try {
     $id = $pdo->lastInsertId();
 
 } catch (PDOException $e) {
+    error_log('PDO agendamento: ' . $e->getMessage());
     http_response_code(500);
-    echo json_encode(['success' => false, 'message' => 'Erro ao salvar agendamento.']);
+    echo json_encode(['success' => false, 'message' => 'Erro ao salvar agendamento. Tente novamente.']);
     exit;
 }
 
@@ -162,6 +163,7 @@ try {
     $mail->Port       = SMTP_PORT;
     $mail->CharSet    = 'UTF-8';
 
+    // E-mail para o admin
     $mail->setFrom(SMTP_USER, 'Site AG Cortinas');
     $mail->addAddress(EMAIL_DESTINO, 'AG Cortinas');
     $mail->addReplyTo($email, $nome);
@@ -170,6 +172,7 @@ try {
     $mail->Body    = $htmlAdmin;
     $mail->send();
 
+    // E-mail para o cliente
     $mail->clearAddresses();
     $mail->clearReplyTos();
     $mail->addAddress($email, $nome);
@@ -185,6 +188,8 @@ try {
     ]);
 
 } catch (Exception $e) {
+    error_log('PHPMailer agendamento: ' . $mail->ErrorInfo);
+    // Agendamento já foi salvo no banco, então retorna sucesso mesmo sem e-mail
     echo json_encode([
         'success' => true,
         'message' => 'Agendamento registrado. Entraremos em contato em breve.',

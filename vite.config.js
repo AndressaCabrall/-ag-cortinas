@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost/AgCortinas',
+        target: 'http://localhost/AgCortinas2',
         changeOrigin: true,
         rewrite: (path) => path, // mantém /api/contato.php como está
       }

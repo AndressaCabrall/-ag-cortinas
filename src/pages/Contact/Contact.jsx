@@ -1,13 +1,11 @@
-
 import { useState } from 'react'
 import './Contact.css'
 import contatoDesktop from '../../assets/images/hero-footer/contato-desktop.webp'
-import { useSEO } from '../../hooks/useSEO' // ← ADICIONAR
+import { useSEO } from '../../hooks/useSEO'
 
 const API_BASE = '/api'
 
 function Contact() {
-  // ← ADICIONAR: SEO da página
   useSEO({
     title: 'Contato — Solicite um Orçamento Grátis',
     description: 'Entre em contato com a AG Cortinas e Persianas. Agende uma visita técnica gratuita ou envie sua mensagem. Atendemos Joinville e região.',
@@ -61,16 +59,12 @@ function Contact() {
     e.preventDefault()
     setAgendaStatus('loading')
     try {
-
-     const res = await fetch(`${API_BASE}/contato.php`, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify(contatoForm)
-})
-const text = await res.text()
-console.log('Resposta bruta:', text)
-const data = JSON.parse(text)
-
+      const res = await fetch(`${API_BASE}/agendamento.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(agendaForm)
+      })
+      const data = await res.json()
       if (data.success) {
         setAgendaStatus('success')
         setAgendaForm({
