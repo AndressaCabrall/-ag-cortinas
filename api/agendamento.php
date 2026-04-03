@@ -1,46 +1,20 @@
 <?php
-/**
- * AG Cortinas — api/agendamento.php
- * Recebe JSON do React, salva no MySQL e envia e-mail de confirmação
- *
- * Dependência: composer require phpmailer/phpmailer
- * Coloque este arquivo em: /api/agendamento.php (raiz do servidor)
- *
- * Rode o SQL abaixo no seu banco antes de usar:
- * 
- * CREATE TABLE agendamentos (
- *   id          INT AUTO_INCREMENT PRIMARY KEY,
- *   nome        VARCHAR(120) NOT NULL,
- *   email       VARCHAR(120) NOT NULL,
- *   telefone    VARCHAR(30)  NOT NULL,
- *   servico     VARCHAR(50),
- *   data_visita DATE         NOT NULL,
- *   horario     VARCHAR(10)  NOT NULL,
- *   endereco    VARCHAR(255) NOT NULL,
- *   complemento VARCHAR(120),
- *   observacoes TEXT,
- *   status      ENUM('pendente','confirmado','cancelado') DEFAULT 'pendente',
- *   criado_em   DATETIME DEFAULT CURRENT_TIMESTAMP
- * ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
- */
- 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
- 
+
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
 }
- 
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Método não permitido.']);
     exit;
 }
- 
-// ---- Autoload PHPMailer ----
+
 $autoload = __DIR__ . '/../vendor/autoload.php';
 if (!file_exists($autoload)) {
     http_response_code(500);
@@ -48,25 +22,24 @@ if (!file_exists($autoload)) {
     exit;
 }
 require $autoload;
- 
+require_once __DIR__ . '/config.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
- 
-// ---- Ler JSON do body ----
+
 $body = file_get_contents('php://input');
 $data = json_decode($body, true);
- 
+
 if (!$data) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Dados inválidos.']);
     exit;
 }
- 
-// ---- Sanitizar ----
+
 function limpa($str) {
     return htmlspecialchars(strip_tags(trim($str ?? '')), ENT_QUOTES, 'UTF-8');
 }
- 
+
 $nome        = limpa($data['nome'] ?? '');
 $email       = filter_var(trim($data['email'] ?? ''), FILTER_SANITIZE_EMAIL);
 $telefone    = limpa($data['telefone'] ?? '');
@@ -76,47 +49,25 @@ $horario     = limpa($data['horario'] ?? '');
 $endereco    = limpa($data['endereco'] ?? '');
 $complemento = limpa($data['complemento'] ?? '');
 $observacoes = limpa($data['observacoes'] ?? '');
- 
-// ---- Validações ----
+
 if (empty($nome) || empty($email) || empty($telefone) || empty($data_visita) || empty($horario) || empty($endereco)) {
     http_response_code(422);
     echo json_encode(['success' => false, 'message' => 'Campos obrigatórios não preenchidos.']);
     exit;
 }
- 
+
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(422);
     echo json_encode(['success' => false, 'message' => 'E-mail inválido.']);
     exit;
 }
- 
-// Validar que a data não é no passado
+
 if (strtotime($data_visita) < strtotime('today')) {
     http_response_code(422);
     echo json_encode(['success' => false, 'message' => 'Data inválida.']);
     exit;
 }
- 
-// ================================================================
-// CONFIGURAÇÃO DO BANCO — altere esta seção
-// ================================================================
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'agcortinas');   // nome do banco na Hostgator
-define('DB_USER', 'root'); // usuário do banco
-define('DB_PASS', '');    // senha do banco
-// ================================================================
- 
-// ================================================================
-// CONFIGURAÇÃO SMTP — mesma do contato.php
-// ================================================================
-define('SMTP_HOST',     'smtp.gmail.com');
-define('SMTP_PORT',     587);
-define('SMTP_USER',     'agcortinasepersianas@gmail.com');
-define('SMTP_PASS',     'srfpdkconoketaai');
-define('EMAIL_DESTINO', 'agcortinasepersianas@gmail.com');
-// ================================================================
- 
-// ---- Serviço formatado ----
+
 $servicoMap = [
     'cortinas'  => 'Cortinas',
     'persianas' => 'Persianas',
@@ -126,8 +77,7 @@ $servicoMap = [
 ];
 $servicoLabel = $servicoMap[$servico] ?? 'Não informado';
 $dataFormatada = date('d/m/Y', strtotime($data_visita));
- 
-// ---- Salvar no banco ----
+
 try {
     $pdo = new PDO(
         "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
@@ -135,14 +85,14 @@ try {
         DB_PASS,
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
     );
- 
+
     $stmt = $pdo->prepare("
         INSERT INTO agendamentos
             (nome, email, telefone, servico, data_visita, horario, endereco, complemento, observacoes)
         VALUES
             (:nome, :email, :telefone, :servico, :data_visita, :horario, :endereco, :complemento, :observacoes)
     ");
- 
+
     $stmt->execute([
         ':nome'        => $nome,
         ':email'       => $email,
@@ -154,17 +104,15 @@ try {
         ':complemento' => $complemento,
         ':observacoes' => $observacoes,
     ]);
- 
+
     $id = $pdo->lastInsertId();
- 
+
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Erro ao salvar agendamento.']);
-    // error_log($e->getMessage());
     exit;
 }
- 
-// ---- E-mail para a AG Cortinas ----
+
 $htmlAdmin = "
 <html><body style='font-family: Arial, sans-serif; color: #333; max-width: 600px;'>
 <h2 style='border-bottom: 2px solid #b8860b; padding-bottom: 8px;'>Nova solicitação de visita — AG Cortinas</h2>
@@ -182,8 +130,7 @@ $htmlAdmin = "
 <p style='margin-top:24px; font-size:12px; color:#999;'>Solicitado em " . date('d/m/Y \à\s H:i') . " via site agcortinas.com.br</p>
 </body></html>
 ";
- 
-// ---- E-mail de confirmação para o cliente ----
+
 $htmlCliente = "
 <html><body style='font-family: Arial, sans-serif; color: #333; max-width: 600px;'>
 <h2 style='border-bottom: 2px solid #b8860b; padding-bottom: 8px;'>Solicitação de visita recebida!</h2>
@@ -202,10 +149,9 @@ $htmlCliente = "
 <p style='margin-top: 24px; font-size: 12px; color: #999;'>AG Cortinas e Persianas — agcortinas.com.br</p>
 </body></html>
 ";
- 
-// ---- Enviar e-mails ----
+
 $mail = new PHPMailer(true);
- 
+
 try {
     $mail->isSMTP();
     $mail->Host       = SMTP_HOST;
@@ -215,8 +161,7 @@ try {
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port       = SMTP_PORT;
     $mail->CharSet    = 'UTF-8';
- 
-    // E-mail para a AG Cortinas
+
     $mail->setFrom(SMTP_USER, 'Site AG Cortinas');
     $mail->addAddress(EMAIL_DESTINO, 'AG Cortinas');
     $mail->addReplyTo($email, $nome);
@@ -224,8 +169,7 @@ try {
     $mail->Subject = "Nova visita solicitada — {$nome} ({$dataFormatada} {$horario})";
     $mail->Body    = $htmlAdmin;
     $mail->send();
- 
-    // E-mail para o cliente
+
     $mail->clearAddresses();
     $mail->clearReplyTos();
     $mail->addAddress($email, $nome);
@@ -233,20 +177,17 @@ try {
     $mail->Body    = $htmlCliente;
     $mail->AltBody = "Olá {$nome}! Recebemos sua solicitação de visita para {$dataFormatada} às {$horario}. Entraremos em contato em breve.";
     $mail->send();
- 
+
     echo json_encode([
         'success' => true,
         'message' => 'Agendamento solicitado com sucesso.',
         'id'      => $id
     ]);
- 
+
 } catch (Exception $e) {
-    // Agendamento foi salvo no banco mas e-mail falhou — não é erro fatal
     echo json_encode([
         'success' => true,
         'message' => 'Agendamento registrado. Entraremos em contato em breve.',
         'id'      => $id
     ]);
-    // error_log($mail->ErrorInfo);
 }
- 

@@ -1,18 +1,9 @@
 <?php
-/**
- * AG Cortinas — api/contato.php
- * Recebe JSON do React, envia e-mail via PHPMailer (SMTP Gmail)
- * 
- * Dependência: composer require phpmailer/phpmailer
- * Coloque este arquivo em: /api/contato.php (raiz do servidor)
- */
-
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
-// Preflight CORS
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
@@ -24,8 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// ---- Autoload PHPMailer ----
-// Caminho padrão quando instalado via Composer
 $autoload = __DIR__ . '/../vendor/autoload.php';
 if (!file_exists($autoload)) {
     http_response_code(500);
@@ -33,11 +22,11 @@ if (!file_exists($autoload)) {
     exit;
 }
 require $autoload;
+require_once __DIR__ . '/config.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// ---- Ler JSON do body ----
 $body = file_get_contents('php://input');
 $data = json_decode($body, true);
 
@@ -47,7 +36,6 @@ if (!$data) {
     exit;
 }
 
-// ---- Sanitizar campos ----
 function limpa($str) {
     return htmlspecialchars(strip_tags(trim($str ?? '')), ENT_QUOTES, 'UTF-8');
 }
@@ -58,7 +46,6 @@ $telefone = limpa($data['telefone'] ?? '');
 $servico  = limpa($data['servico'] ?? '');
 $mensagem = limpa($data['mensagem'] ?? '');
 
-// ---- Validações básicas ----
 if (empty($nome) || empty($email) || empty($telefone)) {
     http_response_code(422);
     echo json_encode(['success' => false, 'message' => 'Campos obrigatórios não preenchidos.']);
@@ -71,18 +58,6 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-// ================================================================
-// CONFIGURAÇÃO SMTP — altere apenas esta seção
-// ================================================================
-define('SMTP_HOST',     'smtp.gmail.com');
-define('SMTP_PORT',     587);
-define('SMTP_USER',     'agcortinasepersianas@gmail.com'); // sua conta Gmail
-define('SMTP_PASS',     'srfpdkconoketaai');          // senha de app do Google
-define('EMAIL_DESTINO', 'agcortinasepersianas@gmail.com'); // quem recebe
-define('EMAIL_REMETENTE_NOME', 'Site AG Cortinas');
-// ================================================================
-
-// ---- Serviço formatado ----
 $servicoMap = [
     'cortinas'  => 'Cortinas',
     'persianas' => 'Persianas',
@@ -92,7 +67,6 @@ $servicoMap = [
 ];
 $servicoLabel = $servicoMap[$servico] ?? 'Não informado';
 
-// ---- Montar HTML do e-mail ----
 $html = "
 <html><body style='font-family: Arial, sans-serif; color: #333; max-width: 600px;'>
 <h2 style='border-bottom: 2px solid #b8860b; padding-bottom: 8px;'>Nova mensagem — AG Cortinas</h2>
@@ -107,7 +81,6 @@ $html = "
 </body></html>
 ";
 
-// ---- Enviar via PHPMailer ----
 $mail = new PHPMailer(true);
 
 try {
@@ -136,5 +109,5 @@ try {
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Erro ao enviar e-mail.']);
-    // Para debug: error_log($mail->ErrorInfo);
+    
 }
