@@ -116,6 +116,7 @@ function Projects() {
                 src={projeto.imagem}
                 alt={projeto.titulo + ' — AG Cortinas e Persianas'}
                 className="projects-img"
+                loading="lazy"
               />
               <div className="projects-overlay">
                 <span className="projects-categoria">{projeto.categoria}</span>

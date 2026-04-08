@@ -39,6 +39,7 @@ function BlogPreview() {
                 <img
                   src={post.imagem}
                   alt={post.titulo}
+                  loading="lazy"
                 />
               </div>
               <div className="blog-preview-card-content">

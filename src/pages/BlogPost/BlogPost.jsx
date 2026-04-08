@@ -76,7 +76,7 @@ function BlogPost() {
                   key={p.id}
                 >
                   <div className="blogpost-relacionado-imagem">
-                    <img src={p.imagem} alt={p.titulo} />
+                    <img src={p.imagem} alt={p.titulo} loading="lazy" />
                   </div>
                   <span className="blogpost-relacionado-categoria">{p.categoria}</span>
                   <h3 className="blogpost-relacionado-titulo">{p.titulo}</h3>

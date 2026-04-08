@@ -21,7 +21,7 @@ import Preloader from "./pages/home/Hero/Preloader.jsx"
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother, useGSAP)
 
-// ─── Context para expor o smoother aos filhos (ex: botões "voltar ao topo") ───
+
 export const SmootherContext = createContext(null)
 export const useSmootherContext = () => useContext(SmootherContext)
 
@@ -31,22 +31,19 @@ function AppInner({ smootherRef, carregado, setCarregado }) {
   const wrapperRef = useRef(null)
   const contentRef = useRef(null)
 
-  /**
-   * Cria o ScrollSmoother UMA vez após o DOM estar pronto.
-   * useGSAP usa useLayoutEffect internamente — roda antes da pintura,
-   * garantindo que wrapper e content já existem no DOM.
-   */
+  
   useGSAP(() => {
     smootherRef.current = ScrollSmoother.create({
       wrapper: wrapperRef.current,
       content: contentRef.current,
       smooth: 1.2,
       effects: true,
-      normalizeScroll: true, // normaliza diferenças entre browsers/devices
+      normalizeScroll: true, 
     })
 
     return () => {
-      // Cleanup correto: mata o smoother ao desmontar
+      
+
       if (smootherRef.current) {
         smootherRef.current.kill()
         smootherRef.current = null
@@ -54,17 +51,7 @@ function AppInner({ smootherRef, carregado, setCarregado }) {
     }
   }, { scope: wrapperRef, dependencies: [] })
 
-  /**
-   * Recalcula o ScrollSmoother a cada troca de rota.
-   *
-   * Por que não recriar o smoother inteiro?
-   * Recriar causa flash e perde o estado. O correto é:
-   * 1. scrollTo(0) — volta ao topo da nova página
-   * 2. ScrollTrigger.refresh() — recalcula TODAS as alturas
-   *
-   * O setTimeout garante que o React já terminou de pintar
-   * o novo conteúdo antes do recálculo.
-   */
+  
   useGSAP(() => {
     if (!smootherRef.current) return
 
@@ -73,7 +60,7 @@ function AppInner({ smootherRef, carregado, setCarregado }) {
 
     // Refresh após o React terminar de pintar o novo layout
     // Home tem mais conteúdo — precisa de mais tempo para calcular
-    const tempo = location.pathname === '/' ? 1200 : 200
+    const tempo = location.pathname === '/' ? 1200 : 600
     const id = setTimeout(() => {
       ScrollTrigger.refresh()
     }, tempo)

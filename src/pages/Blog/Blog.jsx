@@ -33,7 +33,7 @@ function Blog() {
               aria-label={'Ler post: ' + post.titulo}
             >
               <div className="blog-card-imagem">
-                <img src={post.imagem} alt={post.titulo} />
+                <img src={post.imagem} alt={post.titulo} loading="lazy" />
                 <span className="blog-card-categoria">{post.categoria}</span>
               </div>
               <div className="blog-card-content">
